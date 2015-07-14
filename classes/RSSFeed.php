@@ -11,20 +11,21 @@
  *
  * @author bgarcia
  */
-class RSSReader {
+class RSSFeed {
     protected $xml; // SimpleXML
 
     public function __construct($url) {
         if (($xmlstr=file_get_contents($url))===FALSE)
             throw new BadFunctionCallException("Failed to fetch content from url: \n$url");
-        $this->xml = simplexml_load_string($xmlstr);
+        //$this->xml = simplexml_load_string($xmlstr);
+        $this->xml = new SimpleXMLElement($xmlstr);
     }
 
     public function items() {
         return $this->xml->channel->item;
     }
 
-    public function xml() {
-        return $this->xml->asXML();
+    public function display() {
+        echo $this->xml->asXML();
     }
 }

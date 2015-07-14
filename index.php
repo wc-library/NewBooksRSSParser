@@ -11,9 +11,10 @@ function __autoload( $className ) {
 	}
 }
 
-$feed = new RSSReader("https://i-share.carli.illinois.edu/newbooks/newbooks.cgi?library=WHEdb&list=all&day=7&op=and&text=&lang=English&submit=RSS");
+$feed = new CarliBookFeed();
 foreach( $feed->items() as $item) {
-    echo $item->asXML() . "<br><br><br>";
+    var_dump($item);
+    echo "<br/><br/>";
 }
 
 
