@@ -12,9 +12,6 @@ function __autoload( $className ) {
 }
 
 $feed = new CarliBookFeed();
-foreach( $feed->items() as $item) {
-    var_dump($item);
-    echo "<br/><br/>";
-}
+$feed->display();
 
 

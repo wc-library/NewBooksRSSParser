@@ -31,7 +31,7 @@ class CarliBookFeed extends RSSFeed {
                 //separate field name and field value
                 $matches = array();
                 if(preg_match("/^([-a-zA-Z_ ]*[a-zA-Z]{4}): /",$f,$matches)) {;
-                    $fname = $matches[1];
+                    $fname = str_replace(' ','_',$matches[1]);
                     $fvalue = str_replace($matches[0],'',$f);
                     $this->xml->channel->item[$i]->addChild($fname,$fvalue);
                 }
