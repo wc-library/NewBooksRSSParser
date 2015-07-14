@@ -12,6 +12,11 @@ function __autoload( $className ) {
 }
 
 $feed = new CarliBookFeed();
-$feed->display();
+$call_numbers = array();
+foreach($feed->items() as $item) {
+    $call_numbers[] = strtoupper($item->call_number);
+}
 
-
+if(asort($call_numbers))
+    foreach($call_numbers as $cn)
+        echo "$cn\n\n";

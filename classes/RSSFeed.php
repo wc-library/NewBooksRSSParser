@@ -25,9 +25,13 @@ class RSSFeed {
         return $this->xml->channel->item;
     }
 
-    public function display() {
-        echo '<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
-            $this->xml->channel->asXML(),"\n</rss>";
+    public function numItems() {
+        return count($this->xml->channel->item);
+    }
+
+    public function xml() {
+        return '<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'
+            . $this->xml->channel->asXML() . "\n</rss>";
     }
 }

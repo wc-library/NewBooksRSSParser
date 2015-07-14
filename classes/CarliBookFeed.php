@@ -12,6 +12,7 @@
  * @author bgarcia
  */
 class CarliBookFeed extends RSSFeed {
+
     public function __construct() {
         parent::__construct("https://i-share.carli.illinois.edu/newbooks/newbooks.cgi?library=WHEdb&list=all&day=7&op=and&text=&lang=English&submit=RSS");
 
@@ -31,11 +32,16 @@ class CarliBookFeed extends RSSFeed {
                 //separate field name and field value
                 $matches = array();
                 if(preg_match("/^([-a-zA-Z_ ]*[a-zA-Z]{4}): /",$f,$matches)) {;
-                    $fname = str_replace(' ','_',$matches[1]);
-                    $fvalue = str_replace($matches[0],'',$f);
+                    $fname = strtolower(str_replace(' ','_',trim($matches[1])));
+                    $fvalue = trim(str_replace($matches[0],'',$f));
+
                     $this->xml->channel->item[$i]->addChild($fname,$fvalue);
                 }
             }
         }
+    }
+
+    public static function analyze_call_number($callnumber) {
+        return ClassificationFactory::makeProcessor($callnumber)->data();
     }
 }
