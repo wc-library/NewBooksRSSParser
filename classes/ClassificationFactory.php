@@ -12,8 +12,8 @@
  * @author bgarcia
  */
 class ClassificationFactory {
-    private static $regex_lc = '#^[A-Z]{2,3}[0-9]+([.][A-Z][0-9]+)?$#';
-    private static $regex_dewey = '#^[0-9]{3}([/]?[.][0-9]+)?$#';
+    private static $regex_lc = '#[A-Z]{2,3}[0-9]+([.][A-Z][0-9]+)?#';
+    private static $regex_dewey = '#[0-9]{3}([/]?[.][0-9]+)?#';
 
     public static function makeProcessor($callnumber) {
         $segments = explode(' ',$callnumber);
@@ -32,6 +32,12 @@ class ClassificationFactory {
                 if ($prefix==='' && preg_match('/^[0-9]{3}/',$segment)===1) {
                     $number = $segment;
                     $type = "dewey";
+                    continue;
+                }
+
+                if ($prefix==='' && preg_match('/^[A-Z]{2}[0-9]+/',$segment)===1) {
+                    $number = $segment;
+                    $type = "lc";
                     continue;
                 }
 
