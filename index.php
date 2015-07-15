@@ -14,7 +14,7 @@ function __autoload( $className ) {
 $feed = new CarliBookFeed();
 $call_numbers = array();
 foreach($feed->items() as $item) {
-    $call_numbers[] = strtoupper($item->call_number) . " => $item->classification_type";
+    $call_numbers[] = strtoupper($item->call_number) . strtr("\n$item->classification_type\n$item->subject",'_',' ');
 }
 
 if(asort($call_numbers))

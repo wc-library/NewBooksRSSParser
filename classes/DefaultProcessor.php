@@ -24,7 +24,7 @@ class DefaultProcessor implements ClassificationProcessorInterface {
 
 
         $this->data = array();
-        $this->data['classification_type'] = "$txt (UNKNOWN)";
+        $this->data['classification_type'] = "UNKNOWN";
     }
 
     public function data() {

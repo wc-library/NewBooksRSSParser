@@ -14,10 +14,17 @@
 class LCProcessor implements ClassificationProcessorInterface {
     public function __construct($prefix,$number,$cutter) {
         $this->data = array();
-        $this->data['classification_type'] = "{\"$prefix\", \"$number\", \"$cutter\" } (LC)";
+        $this->data['classification_type'] = "LC";
+
+        $cn = intval(substr($number,0,3));
+        $this->data['subject'] = self::get_subject($cn);
     }
 
     public function data() {
         return $this->data;
+    }
+
+    private static function get_subject($cn) {
+        return "Unknown";
     }
 }
