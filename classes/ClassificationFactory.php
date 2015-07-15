@@ -12,8 +12,6 @@
  * @author bgarcia
  */
 class ClassificationFactory {
-    private static $regex_lc = '#[A-Z]{2,3}[0-9]+([.][A-Z][0-9]+)?#';
-    private static $regex_dewey = '#[0-9]{3}([/]?[.][0-9]+)?#';
 
     public static function makeProcessor($callnumber) {
         $segments = explode(' ',$callnumber);
@@ -23,39 +21,21 @@ class ClassificationFactory {
 
         $type = "";
 
-
-        $match = array();
-
         foreach($segments as $segment) {
             if ($number === "") {
-
-                if ($prefix==='' && preg_match('/^[0-9]{3}/',$segment)===1) {
-                    $number = $segment;
-                    $type = "dewey";
-                    continue;
-                }
-
-                if ($prefix==='' && preg_match('/^[A-Z]{2}[0-9]+/',$segment)===1) {
-                    $number = $segment;
-                    $type = "lc";
-                    continue;
-                }
-
                 $seg_arr = str_split($segment);
                 if ($seg_arr[count($seg_arr)-1]==='.' || $seg_arr[0]==='.' || stripos($segment,'-') !== FALSE) {
                     $prefix .= "$segment ";
                     continue;
                 }
 
-                $match = preg_match(self::$regex_lc,$segment,$match);
-                if ($match[0] === $segment) {
+                if (preg_match('/^[A-Z]+[0-9]+/',$segment)===1) {
                     $number = $segment;
                     $type = "lc";
                     continue;
                 }
 
-                $match = preg_match(self::$regex_dewey,$segment,$match);
-                if ($match[0] === $segment) {
+                if (preg_match('/^[0-9]{3}/',$segment)===1) {
                     $number = $segment;
                     $type = "dewey";
                     continue;
@@ -76,6 +56,6 @@ class ClassificationFactory {
             return new LCProcessor($prefix,$number,$cutter);
         else if ($type === "dewey")
             return new DeweyProcessor($prefix,$number,$cutter);
-        return new DefaultProcessor($callnumber,$prefix,$number,$cutter);
+        return new DefaultProcessor($segments);
     }
 }
