@@ -12,7 +12,12 @@
  * @author bgarcia
  */
 class DeweyProcessor implements ClassificationProcessorInterface {
+    public function __construct($prefix,$number,$cutter) {
+    }
+
     public function data() {
-        return array();
+        $data = array();
+        $data['classification_type'] = 'Dewey';
+        return $data;
     }
 }

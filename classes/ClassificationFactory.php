@@ -12,7 +12,63 @@
  * @author bgarcia
  */
 class ClassificationFactory {
+    private static $regex_lc = "/^[A-Z]([A-Z][A-Z]?)?[0-9]+([.][A-Z0-9]+)?$/";
+    private static $regex_dewey = "/^[0-9]{3}([.][0-9]+)?$/";
+
     public static function makeProcessor($callnumber) {
-        return null; // return a DeweyProcessor or LCProcessor
+        $segments = explode(' ',$callnumber);
+        $prefix = "";
+        $number = "";
+        $cutter = "";
+
+        $type = "";
+
+
+        $match = array();
+
+        foreach($segments as $segment) {
+            if ($number === "") {
+                $seg_arr = str_split($segment);
+
+                if ($prefix==='' && ctype_digit($seg_arr[0])) {
+                    $number = $segment;
+                    $type = "dewey";
+                }
+
+                if ($seg_arr[count($seg_arr)-1]==='.' || $seg_arr[0]==='.' || stripos($segment,'-') !== FALSE) {
+                    $prefix .= "$segment ";
+                    continue;
+                }
+
+                $match = preg_match(self::$regex_lc,$segment,$match);
+                if ($match[0] === $segment) {
+                    $number = $segment;
+                    $type = "lc";
+                    continue;
+                }
+
+                $match = preg_match(self::$regex_dewey,$segment,$match);
+                if ($match[0] === $segment) {
+                    $number = $segment;
+                    $type = "dewey";
+                    continue;
+                }
+
+                $prefix .= "$segment ";
+                continue;
+            }
+
+            $cutter .= "$segment ";
+        }
+
+        $prefix = trim($prefix);
+        $number = trim($number);
+        $cutter = trim ($cutter);
+
+        if ($type === "lc")
+            return new LCProcessor($prefix,$number,$cutter);
+        else if ($type === "dewey")
+            return new DeweyProcessor($prefix,$number,$cutter);
+        return new DefaultProcessor($callnumber);
     }
 }

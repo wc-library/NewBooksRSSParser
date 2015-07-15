@@ -36,6 +36,13 @@ class CarliBookFeed extends RSSFeed {
                     $fvalue = trim(str_replace($matches[0],'',$f));
 
                     $this->xml->channel->item[$i]->addChild($fname,$fvalue);
+
+                    if ($fname === 'call_number') {
+                        $cn_data = self::analyze_call_number($fvalue);
+                        foreach($cn_data as $name => $value) {
+                            $this->xml->channel->item[$i]->addChild($name,$value);
+                        }
+                    }
                 }
             }
         }

@@ -7,17 +7,17 @@
  */
 
 /**
- * Description of LCProcessor
+ * Description of DefaultProcessor
  *
  * @author bgarcia
  */
-class LCProcessor implements ClassificationProcessorInterface {
-    public function __construct($prefix,$number,$cutter) {
+class DefaultProcessor implements ClassificationProcessorInterface {
+    public function __construct($callnumber) {
     }
 
     public function data() {
         $data = array();
-        $data['classification_type'] = 'LC';
+        $data['classification_type'] = 'UNKNOWN';
         return $data;
     }
 }
