@@ -13,11 +13,11 @@
  */
 class LCProcessor implements ClassificationProcessorInterface {
     public function __construct($prefix,$number,$cutter) {
+        $this->data = array();
+        $this->data['classification_type'] = "{\"$prefix\", \"$number\", \"$cutter\" } (LC)";
     }
 
     public function data() {
-        $data = array();
-        $data['classification_type'] = 'LC';
-        return $data;
+        return $this->data;
     }
 }

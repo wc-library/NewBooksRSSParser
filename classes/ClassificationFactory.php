@@ -12,8 +12,8 @@
  * @author bgarcia
  */
 class ClassificationFactory {
-    private static $regex_lc = "/^[A-Z]([A-Z][A-Z]?)?[0-9]+([.][A-Z0-9]+)?$/";
-    private static $regex_dewey = "/^[0-9]{3}([.][0-9]+)?$/";
+    private static $regex_lc = '#^[A-Z]{2,3}[0-9]+([.][A-Z][0-9]+)?$#';
+    private static $regex_dewey = '#^[0-9]{3}([/]?[.][0-9]+)?$#';
 
     public static function makeProcessor($callnumber) {
         $segments = explode(' ',$callnumber);
@@ -28,13 +28,14 @@ class ClassificationFactory {
 
         foreach($segments as $segment) {
             if ($number === "") {
-                $seg_arr = str_split($segment);
 
-                if ($prefix==='' && ctype_digit($seg_arr[0])) {
+                if ($prefix==='' && preg_match('/^[0-9]{3}/',$segment)===1) {
                     $number = $segment;
                     $type = "dewey";
+                    continue;
                 }
 
+                $seg_arr = str_split($segment);
                 if ($seg_arr[count($seg_arr)-1]==='.' || $seg_arr[0]==='.' || stripos($segment,'-') !== FALSE) {
                     $prefix .= "$segment ";
                     continue;
@@ -69,6 +70,6 @@ class ClassificationFactory {
             return new LCProcessor($prefix,$number,$cutter);
         else if ($type === "dewey")
             return new DeweyProcessor($prefix,$number,$cutter);
-        return new DefaultProcessor($callnumber);
+        return new DefaultProcessor($callnumber,$prefix,$number,$cutter);
     }
 }

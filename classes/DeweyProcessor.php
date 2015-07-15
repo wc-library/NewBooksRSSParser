@@ -13,11 +13,11 @@
  */
 class DeweyProcessor implements ClassificationProcessorInterface {
     public function __construct($prefix,$number,$cutter) {
+        $this->data = array();
+        $this->data['classification_type'] = "{\"$prefix\", \"$number\", \"$cutter\" } (Dewey)";
     }
 
     public function data() {
-        $data = array();
-        $data['classification_type'] = 'Dewey';
-        return $data;
+        return $this->data;
     }
 }

@@ -12,12 +12,12 @@
  * @author bgarcia
  */
 class DefaultProcessor implements ClassificationProcessorInterface {
-    public function __construct($callnumber) {
+    public function __construct($callnumber,$prefix,$number,$cutter) {
+        $this->data = array();
+        $this->data['classification_type'] = "{\"$prefix\", \"$number\", \"$cutter\" } (UNKNOWN)";
     }
 
     public function data() {
-        $data = array();
-        $data['classification_type'] = 'UNKNOWN';
-        return $data;
+        return $this->data;
     }
 }
