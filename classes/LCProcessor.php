@@ -17,6 +17,7 @@ class LCProcessor implements ClassificationProcessorInterface {
         $this->data['classification_type'] = "LC";
 
         $this->data['subject'] = self::get_subject($number);
+        //$this->data['subject'] = $number." => " . self::normalize($number);
     }
 
     public function data() {
@@ -81,10 +82,14 @@ class LCProcessor implements ClassificationProcessorInterface {
         if (self::in_range($cn,'HT101','HT395'))
             $subject .= ", Urban Studies";
 
-        if ($subject==='')
-            return "Unknown";
+        $subject = strtr($subject,array('  '=>' ', ' '=>'_'));
+        if ($subject=='') {
+            $subject = "Unknown";
+        } else {
+            $subject = substr($subject,2);
+        }
 
-        return strtr(' ','_',substr($subject,2));
+        return $subject;
     }
 
     private static function is_equal($cn,$target) {
@@ -154,14 +159,16 @@ class LCProcessor implements ClassificationProcessorInterface {
     }
 
     private static function normalize_extra($extra) {
+
         $match = array();
-        if (preg_match("[A-Z]",$extra,$match)) {
+        if (preg_match("/[A-Z]/",$extra,$match)) {
             $ch = $match[0];
             $i = 2;
         } else {
             $ch = 'A';
             $i = 1;
         }
+
         $extra = substr($extra,$i);
         $str = ".$ch";
         for ($i=0; $i<4-strlen($extra); ++$i) {

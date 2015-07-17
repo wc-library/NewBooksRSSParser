@@ -90,7 +90,7 @@ class DeweyProcessor implements ClassificationProcessorInterface {
         if ($cn==307)
             $s .= ", Urban_Studies";
 
-        if ($s==='') {
+        if ($s=='') {
             $s = "Unknown";
         } else {
             $s = substr($s,2);
