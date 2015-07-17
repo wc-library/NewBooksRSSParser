@@ -16,8 +16,7 @@ class LCProcessor implements ClassificationProcessorInterface {
         $this->data = array();
         $this->data['classification_type'] = "LC";
 
-        //$this->data['subject'] = self::get_subject($cn);
-        $this->data['subject'] = self::normalize_cn($number);
+        $this->data['subject'] = self::get_subject($number);
     }
 
     public function data() {
@@ -25,18 +24,92 @@ class LCProcessor implements ClassificationProcessorInterface {
     }
 
     private static function get_subject($cn) {
-        return "Unknown";
+        $subject = "";
+
+        if (self::is_equal($cn, "GF") || self::in_range($cn, 'GN', 'GT'))
+            $subject .= ", Anthropology";
+        if (self::is_equal($cn, 'QM') || self::is_equal($cn, "QP") || self::is_equal($cn, "RA"))
+            $subject .= ", Applied Heath Science";
+        if (self::is_equal($cn, "N") || self::is_equal($cn, "TR"))
+            $subject .= ", Art";
+        if (self::is_equal($cn, "BR") || self::is_equal($cn, "BS") || self::is_equal($cn, "BT") || self::is_equal($cn, "BV") || self::is_equal($cn, "BX"))
+            $subject .= ", Biblical and Theological Studies";
+        if (self::in_range($cn, 'QH', 'QR'))
+            $subject .= ", Biology";
+        if (self::is_equal($cn, "HB") || self::is_equal($cn, "HC") || self::is_equal($cn, "HG") || self::is_equal($cn, "HJ") || self::is_equal($cn, "K") || self::in_range($cn,'HD1','HD1395.5') || self::in_range($cn,'HD2321','HD9999') || self::in_range($cn,'HF5001','HF6182'))
+            $subject .= ", Business & Economics";
+        if (self::is_equal($cn, "QD"))
+            $subject .= ", Chemistry";
+        if (self::is_equal($cn, "BV"))
+            $subject .= ", Christian Formation and Ministry";
+        if (false)
+            $subject .= ", Communication";
+        if (self::in_range($cn,'QA75.5','QA76.765'))
+            $subject .= ", Computer Science";
+        if (self::is_equal($cn, "L"))
+            $subject .= ", Education";
+        if (self::in_range($cn,'TA','TN'))
+            $subject .= ", Engineering";
+        if (self::is_equal($cn,'PN') || self::is_equal($cn, "PQ") || self::is_equal($cn,'PR') || self::is_equal($cn, "PS") || self::is_equal($cn, "PT")|| self::is_equal($cn, "PZ"))
+            $subject .= ", English";
+        if (self::is_equal($cn,'GE') || self::is_equal($cn, "QE38") || self::in_range($cn,'QC882','QC994.9') || self::in_range($cn,'QH72','QH77') || self::in_range($cn,'TD169','TD1066'))
+            $subject .= ", Environmental Science";
+        if (false)
+            $subject .= ", Foreign Languages";
+        if (self::is_equal($cn, "QE"))
+            $subject .= ", Geology";
+        if (self::is_equal($cn,'D') || self::is_equal($cn, "E") || self::is_equal($cn, "F"))
+            $subject .= ", History";
+        if (self::is_equal($cn,'HC') || self::is_equal($cn, "HD"))
+            $subject .= ", HNGR";
+        if (self::is_equal($cn,'BV') || self::is_equal($cn, "BX"))
+            $subject .= ", Intercultural Studies";
+        if (self::is_equal($cn,'QA'))
+            $subject .= ", Mathematics";
+        if (self::is_equal($cn,'M') || self::is_equal($cn, "ML") || self::is_equal($cn, "MT"))
+            $subject .= ", Music";
+        if (self::is_equal($cn,'B') || self::is_equal($cn, "BC") || self::is_equal($cn,'BD') || self::is_equal($cn, "BH") || self::is_equal($cn, "BJ"))
+            $subject .= ", Philosophy";
+        if (self::in_range($cn,'QB','QC'))
+            $subject .= ", Physics";
+        if (self::is_equal($cn,'J'))
+            $subject .= ", Politics and International Relations";
+        if (self::is_equal($cn,'BF') || self::in_range($cn,'QP351','QP495') || self::in_range($cn,'R726.5','R726.8') || self::in_range($cn,'RC321','RC571'))
+            $subject .= ", Psychology";
+        if (self::in_range($cn,'HM','HX'))
+            $subject .= ", Sociology";
+        if (self::in_range($cn,'HT101','HT395'))
+            $subject .= ", Urban Studies";
+
+        if ($subject==='')
+            return "Unknown";
+
+        return strtr(' ','_',substr($subject,2));
+    }
+
+    private static function is_equal($cn,$target) {
+        return (self::cmp_cn($cn,$target)==0);
     }
 
     private static function in_range($cn,$min,$max) {
-        $min = self::normalize_cn($min);
-        $cn = self::normalize_cn($cn);
-        $max = self::normalize_cn($max);
-
-        return (strcmp($min,$cn)<=0 && strcmp($cn,$max)<=0);
+        return (self::cmp_cn($min,$cn)<=0 && self::cmp_cn($cn,$max)<=0);
     }
 
-    private static function normalize_cn($cn) {
+    private static function cmp_cn($a,$b) {
+        $n = strlen($a);
+        $m = strlen($b);
+        $a = str_split(self::normalize($a));
+        $b = str_split(self::normalize($b));
+
+        for ($i=0; $i<$n && $i<$m; $i++) {
+            if ($a[$i]!=$b[$i])
+                return strcmp($a[$i],$b[$i]);
+
+        }
+        return 0;
+    }
+
+    private static function normalize($cn,$type='min') {
         $cn_normalized = "ERROR";
 
         $regex_alpha = "([A-Z]{1,3})";
@@ -46,69 +119,54 @@ class LCProcessor implements ClassificationProcessorInterface {
 
         $matches = array();
         if (preg_match($regex,$cn,$matches)) {
-            $alpha = "AAA";
-            if (isset($matches[1]))
-                $alpha = self::normalize_alpha($matches[1]);
+            $alpha = $matches[1];
 
-            $num = "0000";
-            if (isset($matches[2]))
+            if (isset($matches[2])) {
+                $alpha = self::normalize_alpha($matches[1],$type);
                 $num = self::normalize_num($matches[2]);
-
-            $extra = ".A0000";
-            if (isset($matches[3]))
-                $extra = self::normalize_extra($matches[3]);
-
-            $cn_normalized = $alpha . $num . $extra;
+                if (isset($matches[3])) {
+                    $extra = self::normalize_extra($matches[3]);
+                } else {
+                    $extra = '';
+                }
+            } else {
+                $num = '';
+                $extra = '';
+            }
+            $cn_normalized = $alpha.$num.$extra;
         }
         return $cn_normalized;
     }
 
-    private static function normalize_alpha($alpha) {
-        if ($alpha == '')
-            return "AAA";
-        else if (strlen($alpha)==1)
-            $alpha .= 'AA';
-        else if (strlen($alpha)==2)
-            $alpha .= 'A';
-
+    private static function normalize_alpha($alpha,$type) {
+        $ch = ($type=='min')?'A':'Z';
+        for ($i=0; $i<3-strlen($alpha); ++$i)
+            $alpha .= $ch;
         return $alpha;
     }
 
     private static function normalize_num($num) {
-        if (strlen($num)===0)
-            return "0000";
-        if (strlen($num)===1)
-            return "000$num";
-        if (strlen($num)===2)
-            return "00$num";
-        if (strlen($num)===3)
-            return "0$num";
+        $str = '';
+        for ($i=0; $i<4-strlen($num); ++$i)
+            $str .= '0';
 
-        return $num;
+        return $str.$num;
     }
 
     private static function normalize_extra($extra) {
-        $extra = str_replace('.','',$extra);
-        if (strlen($extra)===0)
-            return ".A0000";
-
-        if (ctype_digit($extra))
-            $extra = "A$extra";
-
-        if (strlen($extra)===1)
-            return ".{$extra}0000";
-
-        $alpha = str_split($extra);
-        $alpha = $alpha[0];
-        $extra = substr($extra,1);
-
-        if (strlen($extra)===1)
-            $extra = "000$extra";
-        if (strlen($extra)===2)
-            $extra = "00$extra";
-        if (strlen($extra)===3)
-            $extra = "0$extra";
-
-        return ".{$alpha}{$extra}";
+        $match = array();
+        if (preg_match("[A-Z]",$extra,$match)) {
+            $ch = $match[0];
+            $i = 2;
+        } else {
+            $ch = 'A';
+            $i = 1;
+        }
+        $extra = substr($extra,$i);
+        $str = ".$ch";
+        for ($i=0; $i<4-strlen($extra); ++$i) {
+            $str .= '0';
+        }
+        return $str.$extra;
     }
 }

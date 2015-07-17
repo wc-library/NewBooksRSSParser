@@ -16,7 +16,7 @@ class DeweyProcessor implements ClassificationProcessorInterface {
         $this->data = array();
         $this->data['classification_type'] = "Dewey";
 
-        $cn = intval(substr($number,0,3));
+        $cn = $number + 0.0;
         $this->data['subject'] = self::get_subject($cn);
     }
 
@@ -90,10 +90,11 @@ class DeweyProcessor implements ClassificationProcessorInterface {
         if ($cn==307)
             $s .= ", Urban_Studies";
 
-        if ($s==='')
+        if ($s==='') {
             $s = "Unknown";
-
-        $s = substr($s,2);
+        } else {
+            $s = substr($s,2);
+        }
         return $s;
     }
 
