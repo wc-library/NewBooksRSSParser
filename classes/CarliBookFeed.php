@@ -16,8 +16,11 @@ class CarliBookFeed extends RSSFeed {
     public function __construct() {
         parent::__construct("https://i-share.carli.illinois.edu/newbooks/newbooks.cgi?library=WHEdb&list=all&day=7&op=and&text=&lang=English&submit=RSS");
 
+        unset($this->xml->channel->image[0]);
+
         $nitems = count($this->xml->channel->item);
         for ( $i=0; $i<$nitems; ++$i ) {
+
             $str = $this->xml->channel->item[$i]->description->asXML();
             $str = str_replace('&lt;B&gt;','',$str);
             $str = str_replace('&lt;/B&gt;','',$str);
@@ -26,8 +29,6 @@ class CarliBookFeed extends RSSFeed {
             $fields = explode('&lt;BR/&gt;',$str);
 
             foreach($fields as $f) {
-                if (stripos($f,'&lt;img border=')!==FALSE) //unwanted line
-                    continue;
 
                 //separate field name and field value
                 $matches = array();
@@ -40,6 +41,8 @@ class CarliBookFeed extends RSSFeed {
                     if ($fname === 'call_number') {
                         $cn_data = self::analyze_call_number($fvalue);
                         foreach($cn_data as $name => $value) {
+                            $name = htmlspecialchars($name);
+                            $value = htmlspecialchars($value);
                             $this->xml->channel->item[$i]->addChild($name,$value);
                         }
                     }

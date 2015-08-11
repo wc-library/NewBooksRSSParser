@@ -39,8 +39,11 @@ class RSSFeed {
     }
 
     public function xml() {
-        return '<?xml version="1.0" encoding="UTF-8"?>
+        header("Content-type: text/xml");
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'
             . $this->xml->channel->asXML() . "\n</rss>";
+
+        return $xml;
     }
 }

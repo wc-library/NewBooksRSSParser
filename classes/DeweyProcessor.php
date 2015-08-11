@@ -11,21 +11,14 @@
  *
  * @author bgarcia
  */
-class DeweyProcessor implements ClassificationProcessorInterface {
+class DeweyProcessor extends AbstractClassificationProcessor {
     public function __construct($prefix,$number,$cutter) {
-        $this->data = array();
+        parent::__construct($number + 0.0);
         $this->data['classification_type'] = "Dewey";
-
-        $cn = $number + 0.0;
-        $this->data['subject'] = self::get_subject($cn);
     }
 
-    public function data() {
-        return $this->data;
-    }
-
-    private static function get_subject($cn) {
-        $s = '';
+    protected function get_subject($cn) {
+        $s = 'All Subjects';
 
         if (in_array($cn,array(300,301,306)))
             $s .= ", Anthropology";
@@ -90,11 +83,6 @@ class DeweyProcessor implements ClassificationProcessorInterface {
         if ($cn==307)
             $s .= ", Urban_Studies";
 
-        if ($s=='') {
-            $s = "Unknown";
-        } else {
-            $s = substr($s,2);
-        }
         return $s;
     }
 

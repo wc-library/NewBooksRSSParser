@@ -11,8 +11,9 @@
  *
  * @author bgarcia
  */
-class DefaultProcessor implements ClassificationProcessorInterface {
+class DefaultProcessor extends AbstractClassificationProcessor {
     public function __construct($segments) {
+        parent::__construct(null);
         $txt = "";
         foreach($segments as $seg) {
             if ($txt==='')
@@ -21,10 +22,11 @@ class DefaultProcessor implements ClassificationProcessorInterface {
                 $txt .= ", $seg";
         }
         $txt .= "}";
-
-
-        $this->data = array();
         $this->data['classification_type'] = "UNKNOWN";
+    }
+
+    public function get_subject($cn) {
+        return "All Subjects";
     }
 
     public function data() {

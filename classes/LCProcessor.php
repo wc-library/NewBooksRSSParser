@@ -11,21 +11,14 @@
  *
  * @author bgarcia
  */
-class LCProcessor implements ClassificationProcessorInterface {
+class LCProcessor extends AbstractClassificationProcessor {
     public function __construct($prefix,$number,$cutter) {
-        $this->data = array();
+        parent::__construct($number);
         $this->data['classification_type'] = "LC";
-
-        $this->data['subject'] = self::get_subject($number);
-        //$this->data['subject'] = $number." => " . self::normalize($number);
     }
 
-    public function data() {
-        return $this->data;
-    }
-
-    private static function get_subject($cn) {
-        $subject = "";
+    protected function get_subject($cn) {
+        $subject = "All Subjects";
 
         if (self::is_equal($cn, "GF") || self::in_range($cn, 'GN', 'GT'))
             $subject .= ", Anthropology";
@@ -82,14 +75,7 @@ class LCProcessor implements ClassificationProcessorInterface {
         if (self::in_range($cn,'HT101','HT395'))
             $subject .= ", Urban Studies";
 
-        $subject = strtr($subject,array('  '=>' ', ' '=>'_'));
-        if ($subject=='') {
-            $subject = "Unknown";
-        } else {
-            $subject = substr($subject,2);
-        }
-
-        return $subject;
+        return strtr($subject,array('  '=>' '));
     }
 
     private static function is_equal($cn,$target) {
