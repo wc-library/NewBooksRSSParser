@@ -68,7 +68,7 @@ class DeweyProcessor extends AbstractClassificationProcessor {
             $s .= ", Intercultural_Studies";
         if (self::in_range($cn,500,519))
             $s .= ", Mathematics";
-        if ($cn==780)
+        if (self::inrange($cn,700,799))
             $s .= ", Music";
         if (self::in_range($cn,100,129) || self::in_range($cn,140,149) || self::in_range($cn,160,199))
             $s .= ", Philosophy";

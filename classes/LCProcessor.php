@@ -48,7 +48,7 @@ class LCProcessor extends AbstractClassificationProcessor {
             $subject .= ", English";
         if (self::is_equal($cn,'GE') || self::is_equal($cn, "QE38") || self::in_range($cn,'QC882','QC994.9') || self::in_range($cn,'QH72','QH77') || self::in_range($cn,'TD169','TD1066'))
             $subject .= ", Environmental Science";
-        if (false)
+        if (self::is_equal($cn, 'PA') || self::is_equal($cn, 'PB'))
             $subject .= ", Foreign Languages";
         if (self::is_equal($cn, "QE"))
             $subject .= ", Geology";
