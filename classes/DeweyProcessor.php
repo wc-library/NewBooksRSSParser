@@ -23,31 +23,31 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         if (in_array($cn,array(300,301,306)))
             $s .= ", Anthropology";
         if (self::in_range($cn,611,616))
-            $s .= ", Applied_Health_Science";
+            $s .= ", Applied Health Science";
         if (self::in_range($cn,700,770))
             $s .= ", Art";
         if (self::in_range($cn,200,299))
-            $s .= ", Biblical_and_Theological_Studies";
+            $s .= ", Biblical & Theological Studies";
         if (self::in_range($cn,570,599))
             $s .= ", Biology";
         if ( self::in_range($cn,330,349) || self::in_range($cn,657,659) || in_array($cn,array(406,506,650,706,906)))
-            $s .= ", Business_&_Economics";
+            $s .= ", Business & Economics";
         if (self::in_range($cn,540,548))
             $s .= ", Chemistry";
         if (self::in_range($cn,230,236) || self::in_range($cn,238,243) || self::in_range($cn,246,249) || self::in_range($cn,262,265) || self::in_range($cn,268,287))
-            $s .= ", Christian_Formation_and_Ministry";
+            $s .= ", Christian Formation & Ministry";
         if (self::in_range($cn,70,79))
-            $s .= ", Communication:_journalism";
+            $s .= ", Communication: journalism";
         if ($cn==302)
-            $s .= ", Communication:_interpersonal";
+            $s .= ", Communication: interpersonal";
         if (self::in_range($cn,383,384))
-            $s .= ", Communication:_businesses";
+            $s .= ", Communication: businesses";
         if (self::in_range($cn,791,792))
-            $s .= ", Communication:_cinema_and_theatre_arts";
+            $s .= ", Communication: cinema and theatre arts";
         if ($cn==800 || $cn==808)
-            $s .= ", Communication:_rhetoric";
+            $s .= ", Communication: rhetoric";
         if (self::in_range($cn,3,6))
-            $s .= ", Computer_Science";
+            $s .= ", Computer Science";
         if (self::in_range($cn,370,378))
             $s .= ", Education";
         if (self::in_range($cn,620,629))
@@ -55,9 +55,9 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         if (self::in_range($cn,800,829))
             $s .= ", English";
         if (false)
-            $s .= ", Environmental_Science";
+            $s .= ", Environmental Science";
         if (false)
-            $s .= ", Foreign_Languages";
+            $s .= ", Foreign Languages";
         if (self::in_range($cn,550,560))
             $s .= ", Geology";
         if (self::in_range($cn,900,999))
@@ -65,7 +65,7 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         if (false)
             $s .= ", HNGR";
         if (false)
-            $s .= ", Intercultural_Studies";
+            $s .= ", Intercultural Studies";
         if (self::in_range($cn,500,519))
             $s .= ", Mathematics";
         if (self::inrange($cn,700,799))
@@ -75,13 +75,13 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         if (self::in_range($cn,520,539))
             $s .= ", Physics";
         if (self::in_range($cn,310,329))
-            $s .= ", Politics_and_International_Relations";
+            $s .= ", Politics & International Relations";
         if (self::in_range($cn,150,159) || $cn==616)
             $s .= ", Psychology";
         if (self::in_range($cn,300,309))
             $s .= ", Sociology";
         if ($cn==307)
-            $s .= ", Urban_Studies";
+            $s .= ", Urban Studies";
 
         return $s;
     }

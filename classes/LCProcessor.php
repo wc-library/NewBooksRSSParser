@@ -27,7 +27,7 @@ class LCProcessor extends AbstractClassificationProcessor {
         if (self::is_equal($cn, "N") || self::is_equal($cn, "TR"))
             $subject .= ", Art";
         if (self::is_equal($cn, "BR") || self::is_equal($cn, "BS") || self::is_equal($cn, "BT") || self::is_equal($cn, "BV") || self::is_equal($cn, "BX"))
-            $subject .= ", Biblical and Theological Studies";
+            $subject .= ", Biblical & Theological Studies";
         if (self::in_range($cn, 'QH', 'QR'))
             $subject .= ", Biology";
         if (self::is_equal($cn, "HB") || self::is_equal($cn, "HC") || self::is_equal($cn, "HG") || self::is_equal($cn, "HJ") || self::is_equal($cn, "K") || self::in_range($cn,'HD1','HD1395.5') || self::in_range($cn,'HD2321','HD9999') || self::in_range($cn,'HF5001','HF6182'))
@@ -35,7 +35,7 @@ class LCProcessor extends AbstractClassificationProcessor {
         if (self::is_equal($cn, "QD"))
             $subject .= ", Chemistry";
         if (self::is_equal($cn, "BV"))
-            $subject .= ", Christian Formation and Ministry";
+            $subject .= ", Christian Formation & Ministry";
         if (false)
             $subject .= ", Communication";
         if (self::in_range($cn,'QA75.5','QA76.765'))
@@ -67,7 +67,7 @@ class LCProcessor extends AbstractClassificationProcessor {
         if (self::in_range($cn,'QB','QC'))
             $subject .= ", Physics";
         if (self::is_equal($cn,'J'))
-            $subject .= ", Politics and International Relations";
+            $subject .= ", Politics & International Relations";
         if (self::is_equal($cn,'BF') || self::in_range($cn,'QP351','QP495') || self::in_range($cn,'R726.5','R726.8') || self::in_range($cn,'RC321','RC571'))
             $subject .= ", Psychology";
         if (self::in_range($cn,'HM','HX'))
