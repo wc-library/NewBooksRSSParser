@@ -18,9 +18,7 @@ class RSSFeed {
         if (($xmlstr=file_get_contents($url))===FALSE)
             throw new RuntimeException("Failed to fetch content from url: \n$url");
 
-        $xmlstr = preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $xmlstr);
-        $xmlstr = \ForceUTF8\Encoding::toUTF8($xmlstr); // https://github.com/neitanod/forceutf8
-
+        $xmlstr = self::fixXMLEncoding($xmlstr);
 
         $doc = new DOMDocument();
         if ($doc->loadXML($xmlstr,LIBXML_PARSEHUGE|LIBXML_PEDANTIC) === FALSE) {
@@ -28,6 +26,12 @@ class RSSFeed {
         } else if ( ($this->xml=simplexml_import_dom($doc)) === FALSE) {
             error_log("failed to import DOM node into SimpleXML");
         }
+    }
+
+    public static function fixXMLEncoding($xmlstr) {
+        return \ForceUTF8\Encoding::toUTF8(
+            preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $xmlstr)
+            ); // https://github.com/neitanod/forceutf8
     }
 
     public function items() {

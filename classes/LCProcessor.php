@@ -18,7 +18,7 @@ class LCProcessor extends AbstractClassificationProcessor {
     }
 
     protected function get_subject($cn) {
-        $subject = "All Subjects";
+        $subject = "";
 
         if ($this->in_range($cn, "GF,GN-GT"))
             $subject .= ", Anthropology";
@@ -26,7 +26,7 @@ class LCProcessor extends AbstractClassificationProcessor {
             $subject .= ", Applied Heath Science";
         if ($this->in_range($cn, "N,TR"))
             $subject .= ", Art";
-        if ($this->in_range($cn, "BR,BS,BT,BV,BX"))
+        if ($this->in_range($cn, "BL-BV1999,BV4000-BV4399,BX"))
             $subject .= ", Biblical & Theological Studies";
         if ($this->in_range($cn, 'QH', 'QR'))
             $subject .= ", Biology";
@@ -34,7 +34,7 @@ class LCProcessor extends AbstractClassificationProcessor {
             $subject .= ", Business & Economics";
         if ($this->in_range($cn, "QD"))
             $subject .= ", Chemistry";
-        if ($this->in_range($cn, "BV"))
+        if ($this->in_range($cn, "BV4400-BV5099"))
             $subject .= ", Christian Formation & Ministry";
         if (false)
             $subject .= ", Communication";
@@ -66,7 +66,7 @@ class LCProcessor extends AbstractClassificationProcessor {
             $subject .= ", Philosophy";
         if ($this->in_range($cn,'QB-QC'))
             $subject .= ", Physics";
-        if ($this->in_range($cn,'J'))
+        if ($this->in_range($cn,'J,BV2000-BV3999'))
             $subject .= ", Politics & International Relations";
         if ($this->in_range($cn,'BF,QP351-QP495,R726.5-R726.8,RC321-RC571'))
             $subject .= ", Psychology";
@@ -75,6 +75,9 @@ class LCProcessor extends AbstractClassificationProcessor {
         if ($this->in_range($cn,'HT101-HT395'))
             $subject .= ", Urban Studies";
 
+        if ($subject!=='') {
+            $subject = substr($subject,2);
+        }
         return strtr($subject,array('  '=>' '));
     }
 

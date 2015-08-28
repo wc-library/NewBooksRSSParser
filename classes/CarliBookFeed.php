@@ -15,18 +15,21 @@ class CarliBookFeed extends RSSFeed {
 
     public function __construct() {
         parent::__construct("https://i-share.carli.illinois.edu/newbooks/newbooks.cgi?library=WHEdb&list=all&day=7&op=and&text=&lang=English&submit=RSS");
-
-        unset($this->xml->channel->image[0]);
-
         $nitems = count($this->xml->channel->item);
         for ( $i=0; $i<$nitems; ++$i ) {
 
-            $str = $this->xml->channel->item[$i]->description->asXML();
-            $str = str_replace('&lt;B&gt;','',$str);
-            $str = str_replace('&lt;/B&gt;','',$str);
-            $str = str_replace('<description>','',$str);
-            $str = str_replace('</description>','',$str);
-            $fields = explode('&lt;BR/&gt;',$str);
+            $str =  explode('&lt;BR/&gt;',
+                    preg_replace('@&lt;img border="0" src="(.*)" vspace="3" border="0" align="right"/&gt;@',"\\1",
+                    str_replace(array(
+                            '&lt;B&gt;',
+                            '&lt;/B&gt;',
+                            '<description>','</description>'),
+                        '',
+                        $this->xml->channel->item[$i]->description->asXML()
+                        ))
+                );
+            $this->xml->channel->item[$i]->description = implode("\n",$str);
+            $fields = $str;
 
             foreach($fields as $f) {
 

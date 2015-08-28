@@ -18,7 +18,7 @@ abstract class AbstractClassificationProcessor {
     }
 
     protected function get_subject($cn) {
-        return "All Subjects";
+        return "";
     }
 
     protected function cmp_cn($cn1,$cn2) {

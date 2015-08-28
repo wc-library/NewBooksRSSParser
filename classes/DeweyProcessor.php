@@ -18,7 +18,7 @@ class DeweyProcessor extends AbstractClassificationProcessor {
     }
 
     protected function get_subject($cn) {
-        $s = 'All Subjects';
+        $s = '';
 
         if ($this->in_range($cn,"300,301,306"))
             $s .= ", Anthropology";
@@ -82,7 +82,9 @@ class DeweyProcessor extends AbstractClassificationProcessor {
             $s .= ", Sociology";
         if ($this->in_range($cn,'307'))
             $s .= ", Urban Studies";
-
+        if ($s!=='') {
+            $s = substr($s,2);
+        }
         return $s;
     }
 
