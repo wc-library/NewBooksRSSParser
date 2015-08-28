@@ -24,12 +24,4 @@ class DefaultProcessor extends AbstractClassificationProcessor {
         $txt .= "}";
         $this->data['classification_type'] = "UNKNOWN";
     }
-
-    public function get_subject($cn) {
-        return "All Subjects";
-    }
-
-    public function data() {
-        return $this->data;
-    }
 }

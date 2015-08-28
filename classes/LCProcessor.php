@@ -20,73 +20,65 @@ class LCProcessor extends AbstractClassificationProcessor {
     protected function get_subject($cn) {
         $subject = "All Subjects";
 
-        if (self::is_equal($cn, "GF") || self::in_range($cn, 'GN', 'GT'))
+        if ($this->in_range($cn, "GF,GN-GT"))
             $subject .= ", Anthropology";
-        if (self::is_equal($cn, 'QM') || self::is_equal($cn, "QP") || self::is_equal($cn, "RA"))
+        if ($this->in_range($cn, 'QM,QP,RA'))
             $subject .= ", Applied Heath Science";
-        if (self::is_equal($cn, "N") || self::is_equal($cn, "TR"))
+        if ($this->in_range($cn, "N,TR"))
             $subject .= ", Art";
-        if (self::is_equal($cn, "BR") || self::is_equal($cn, "BS") || self::is_equal($cn, "BT") || self::is_equal($cn, "BV") || self::is_equal($cn, "BX"))
+        if ($this->in_range($cn, "BR,BS,BT,BV,BX"))
             $subject .= ", Biblical & Theological Studies";
-        if (self::in_range($cn, 'QH', 'QR'))
+        if ($this->in_range($cn, 'QH', 'QR'))
             $subject .= ", Biology";
-        if (self::is_equal($cn, "HB") || self::is_equal($cn, "HC") || self::is_equal($cn, "HG") || self::is_equal($cn, "HJ") || self::is_equal($cn, "K") || self::in_range($cn,'HD1','HD1395.5') || self::in_range($cn,'HD2321','HD9999') || self::in_range($cn,'HF5001','HF6182'))
+        if ($this->in_range($cn, "HB,HC,HG,HJ,K,HD1-HD1395.5,HD2321-HD9999,HF5001-HF6182"))
             $subject .= ", Business & Economics";
-        if (self::is_equal($cn, "QD"))
+        if ($this->in_range($cn, "QD"))
             $subject .= ", Chemistry";
-        if (self::is_equal($cn, "BV"))
+        if ($this->in_range($cn, "BV"))
             $subject .= ", Christian Formation & Ministry";
         if (false)
             $subject .= ", Communication";
-        if (self::in_range($cn,'QA75.5','QA76.765'))
+        if ($this->in_range($cn,'QA75.5','QA76.765'))
             $subject .= ", Computer Science";
-        if (self::is_equal($cn, "L"))
+        if ($this->in_range($cn, "L"))
             $subject .= ", Education";
-        if (self::in_range($cn,'TA','TN'))
+        if ($this->in_range($cn,'TA','TN'))
             $subject .= ", Engineering";
-        if (self::is_equal($cn,'PN') || self::is_equal($cn, "PQ") || self::is_equal($cn,'PR') || self::is_equal($cn, "PS") || self::is_equal($cn, "PT")|| self::is_equal($cn, "PZ"))
+        if ($this->in_range($cn,'PN,PQ,PR,PS,PT,PZ'))
             $subject .= ", English";
-        if (self::is_equal($cn,'GE') || self::is_equal($cn, "QE38") || self::in_range($cn,'QC882','QC994.9') || self::in_range($cn,'QH72','QH77') || self::in_range($cn,'TD169','TD1066'))
+        if ($this->in_range($cn,'GE,QE38,QC882-QC994.9,QH72-QH77,TD169-TD1066'))
             $subject .= ", Environmental Science";
-        if (self::is_equal($cn, 'PA') || self::is_equal($cn, 'PB'))
+        if ($this->in_range($cn, 'PA,PB'))
             $subject .= ", Foreign Languages";
-        if (self::is_equal($cn, "QE"))
+        if ($this->in_range($cn, "QE"))
             $subject .= ", Geology";
-        if (self::is_equal($cn,'D') || self::is_equal($cn, "E") || self::is_equal($cn, "F"))
+        if ($this->in_range($cn,'D,E,F'))
             $subject .= ", History";
-        if (self::is_equal($cn,'HC') || self::is_equal($cn, "HD"))
+        if ($this->in_range($cn,'HC,HD'))
             $subject .= ", HNGR";
-        if (self::is_equal($cn,'BV') || self::is_equal($cn, "BX"))
+        if ($this->in_range($cn,'BV,BX'))
             $subject .= ", Intercultural Studies";
-        if (self::is_equal($cn,'QA'))
+        if ($this->in_range($cn,'QA'))
             $subject .= ", Mathematics";
-        if (self::is_equal($cn,'M') || self::is_equal($cn, "ML") || self::is_equal($cn, "MT"))
+        if ($this->in_range($cn,'M,ML,MT'))
             $subject .= ", Music";
-        if (self::is_equal($cn,'B') || self::is_equal($cn, "BC") || self::is_equal($cn,'BD') || self::is_equal($cn, "BH") || self::is_equal($cn, "BJ"))
+        if ($this->in_range($cn,'BA,BB,BC,BD,BH,BJ'))
             $subject .= ", Philosophy";
-        if (self::in_range($cn,'QB','QC'))
+        if ($this->in_range($cn,'QB-QC'))
             $subject .= ", Physics";
-        if (self::is_equal($cn,'J'))
+        if ($this->in_range($cn,'J'))
             $subject .= ", Politics & International Relations";
-        if (self::is_equal($cn,'BF') || self::in_range($cn,'QP351','QP495') || self::in_range($cn,'R726.5','R726.8') || self::in_range($cn,'RC321','RC571'))
+        if ($this->in_range($cn,'BF,QP351-QP495,R726.5-R726.8,RC321-RC571'))
             $subject .= ", Psychology";
-        if (self::in_range($cn,'HM','HX'))
+        if ($this->in_range($cn,'HM-HX'))
             $subject .= ", Sociology";
-        if (self::in_range($cn,'HT101','HT395'))
+        if ($this->in_range($cn,'HT101-HT395'))
             $subject .= ", Urban Studies";
 
         return strtr($subject,array('  '=>' '));
     }
 
-    private static function is_equal($cn,$target) {
-        return (self::cmp_cn($cn,$target)==0);
-    }
-
-    private static function in_range($cn,$min,$max) {
-        return (self::cmp_cn($min,$cn)<=0 && self::cmp_cn($cn,$max)<=0);
-    }
-
-    private static function cmp_cn($a,$b) {
+    protected function cmp_cn($a,$b) {
         $n = strlen($a);
         $m = strlen($b);
         $a = str_split(self::normalize($a));
