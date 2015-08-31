@@ -13,84 +13,105 @@
  */
 class LCProcessor extends AbstractClassificationProcessor {
     public function __construct($prefix,$number,$cutter) {
-        parent::__construct($number);
-        $this->data['classification_type'] = "LC";
+        parent::__construct('LC',$prefix,$number,$cutter);
     }
 
     protected function get_subject($cn) {
-        $subject = "";
+        $subjects = array();
 
         if ($this->in_range($cn, "GF,GN-GT"))
-            $subject .= ", Anthropology";
-        if ($this->in_range($cn, 'QM,QP,RA'))
-            $subject .= ", Applied Heath Science";
-        if ($this->in_range($cn, "N,TR"))
-            $subject .= ", Art";
-        if ($this->in_range($cn, "BL-BV1999,BV4000-BV4399,BX"))
-            $subject .= ", Biblical & Theological Studies";
-        if ($this->in_range($cn, 'QH', 'QR'))
-            $subject .= ", Biology";
-        if ($this->in_range($cn, "HB,HC,HG,HJ,K,HD1-HD1395.5,HD2321-HD9999,HF5001-HF6182"))
-            $subject .= ", Business & Economics";
-        if ($this->in_range($cn, "QD"))
-            $subject .= ", Chemistry";
-        if ($this->in_range($cn, "BV4400-BV5099"))
-            $subject .= ", Christian Formation & Ministry";
-        if (false)
-            $subject .= ", Communication";
-        if ($this->in_range($cn,'QA75.5','QA76.765'))
-            $subject .= ", Computer Science";
-        if ($this->in_range($cn, "L"))
-            $subject .= ", Education";
-        if ($this->in_range($cn,'TA','TN'))
-            $subject .= ", Engineering";
-        if ($this->in_range($cn,'PN,PQ,PR,PS,PT,PZ'))
-            $subject .= ", English";
-        if ($this->in_range($cn,'GE,QE38,QC882-QC994.9,QH72-QH77,TD169-TD1066'))
-            $subject .= ", Environmental Science";
-        if ($this->in_range($cn, 'PA,PB'))
-            $subject .= ", Foreign Languages";
-        if ($this->in_range($cn, "QE"))
-            $subject .= ", Geology";
-        if ($this->in_range($cn,'D,E,F'))
-            $subject .= ", History";
-        if ($this->in_range($cn,'HC,HD'))
-            $subject .= ", HNGR";
-        if ($this->in_range($cn,'BV,BX'))
-            $subject .= ", Intercultural Studies";
-        if ($this->in_range($cn,'QA'))
-            $subject .= ", Mathematics";
-        if ($this->in_range($cn,'M,ML,MT'))
-            $subject .= ", Music";
-        if ($this->in_range($cn,'BA,BB,BC,BD,BH,BJ'))
-            $subject .= ", Philosophy";
-        if ($this->in_range($cn,'QB-QC'))
-            $subject .= ", Physics";
-        if ($this->in_range($cn,'J,BV2000-BV3999'))
-            $subject .= ", Politics & International Relations";
-        if ($this->in_range($cn,'BF,QP351-QP495,R726.5-R726.8,RC321-RC571'))
-            $subject .= ", Psychology";
-        if ($this->in_range($cn,'HM-HX'))
-            $subject .= ", Sociology";
-        if ($this->in_range($cn,'HT101-HT395'))
-            $subject .= ", Urban Studies";
+            $subjects[] = "Anthropology";
 
-        if ($subject!=='') {
-            $subject = substr($subject,2);
-        }
-        return strtr($subject,array('  '=>' '));
+        if ($this->in_range($cn, 'QM,QP,RA'))
+            $subjects[] = "Applied Heath Science";
+
+        if ($this->in_range($cn, "N,TR"))
+            $subjects[] = "Art";
+
+        if ($this->in_range($cn, "BL-BV1999,BV4000-BV4399,BX"))
+            $subjects[] = "Biblical & Theological Studies";
+
+        if ($this->in_range($cn, 'QH', 'QR'))
+            $subjects[] = "Biology";
+
+        if ($this->in_range($cn, "HB,HC,HG,HJ,K,HD1-HD1395.5,HD2321-HD9999,HF5001-HF6182"))
+            $subjects[] = "Business & Economics";
+
+        if ($this->in_range($cn, "QD"))
+            $subjects[] = "Chemistry";
+
+        if ($this->in_range($cn, "BV4400-BV5099"))
+            $subjects[] = "Christian Formation & Ministry";
+
+        if (false)
+            $subjects[] = "Communication";
+
+        if ($this->in_range($cn,'QA75.5','QA76.765'))
+            $subjects[] = "Computer Science";
+
+        if ($this->in_range($cn, "L"))
+            $subjects[] = "Education";
+
+        if ($this->in_range($cn,'TA','TN'))
+            $subjects[] = "Engineering";
+
+        if ($this->in_range($cn,'PN,PQ,PR,PS,PT,PZ'))
+            $subjects[] = "English";
+
+        if ($this->in_range($cn,'GE,QE38,QC882-QC994.9,QH72-QH77,TD169-TD1066'))
+            $subjects[] = "Environmental Science";
+
+        if ($this->in_range($cn, 'PA,PB'))
+            $subjects[] = "Foreign Languages";
+
+        if ($this->in_range($cn, "QE"))
+            $subjects[] = "Geology";
+
+        if ($this->in_range($cn,'D,E,F'))
+            $subjects[] = "History";
+
+        if ($this->in_range($cn,'HC,HD'))
+            $subjects[] = "HNGR";
+
+        if ($this->in_range($cn,'BV,BX'))
+            $subjects[] = "Intercultural Studies";
+
+        if ($this->in_range($cn,'QA'))
+            $subjects[] = "Mathematics";
+
+        if ($this->in_range($cn,'M,ML,MT'))
+            $subjects[] = "Music";
+
+        if ($this->in_range($cn,'BA,BB,BC,BD,BH,BJ'))
+            $subjects[] = "Philosophy";
+
+        if ($this->in_range($cn,'QB-QC'))
+            $subjects[] = "Physics";
+
+        if ($this->in_range($cn,'J,BV2000-BV3999'))
+            $subjects[] = "Politics & International Relations";
+
+        if ($this->in_range($cn,'BF,QP351-QP495,R726.5-R726.8,RC321-RC571'))
+            $subjects[] = "Psychology";
+
+        if ($this->in_range($cn,'HM-HX'))
+            $subjects[] = "Sociology";
+
+        if ($this->in_range($cn,'HT101-HT395'))
+            $subjects[] = "Urban Studies";
+
+        return implode(', ',$subjects);
     }
 
     protected function cmp_cn($a,$b) {
-        $n = strlen($a);
-        $m = strlen($b);
+
         $a = str_split(self::normalize($a));
         $b = str_split(self::normalize($b));
 
-        for ($i=0; $i<$n && $i<$m; $i++) {
-            if ($a[$i]!=$b[$i])
-                return strcmp($a[$i],$b[$i]);
-
+        $n = min(count($a),count($b));
+        for ($i=0; $i<$n; $i++) {
+            if ($a[$i]!==$b[$i])
+                return strcasecmp("{$a[$i]}","{$b[$i]}");
         }
         return 0;
     }
@@ -100,7 +121,7 @@ class LCProcessor extends AbstractClassificationProcessor {
 
         $regex_alpha = "([A-Z]{1,3})";
         $regex_num = "([0-9]{0,4})";
-        $regex_extra = "(\.[A-Z0-9][0-9]*)";
+        $regex_extra = "([ ]?\.[A-Z0-9][0-9]*)";
         $regex = "/^{$regex_alpha}{$regex_num}?{$regex_extra}?/";
 
         $matches = array();

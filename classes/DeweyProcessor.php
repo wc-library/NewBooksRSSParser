@@ -13,79 +13,106 @@
  */
 class DeweyProcessor extends AbstractClassificationProcessor {
     public function __construct($prefix,$number,$cutter) {
-        parent::__construct($number + 0.0);
-        $this->data['classification_type'] = "Dewey";
+        parent::__construct("Dewey",$prefix,$number + 0.0,$cutter);
     }
 
     protected function get_subject($cn) {
-        $s = '';
+        $subjects = array();
 
         if ($this->in_range($cn,"300,301,306"))
-            $s .= ", Anthropology";
+            $subjects[] = "Anthropology";
+
         if ($this->in_range($cn,"611-616"))
-            $s .= ", Applied Health Science";
+            $subjects[] = "Applied Health Science";
+
         if ($this->in_range($cn,"700-770"))
-            $s .= ", Art";
+            $subjects[] = "Art";
+
         if ($this->in_range($cn,"200-299"))
-            $s .= ", Biblical & Theological Studies";
+            $subjects[] = "Biblical & Theological Studies";
+
         if ($this->in_range($cn,'570-599'))
-            $s .= ", Biology";
+            $subjects[] = "Biology";
+
         if ( $this->in_range($cn,'330-349,657-659,406,506,650,706,906'))
-            $s .= ", Business & Economics";
+            $subjects[] = "Business & Economics";
+
         if ($this->in_range($cn,'540-548'))
-            $s .= ", Chemistry";
+            $subjects[] = "Chemistry";
+
         if ($this->in_range($cn,'230-236,238-243,246-249,262-265,268-287'))
-            $s .= ", Christian Formation & Ministry";
+            $subjects[] = "Christian Formation & Ministry";
+
         if ($this->in_range($cn,'70-79'))
-            $s .= ", Communication: journalism";
+            $subjects[] = "Communication: journalism";
+
         if ($this->in_range($cn,'302'))
-            $s .= ", Communication: interpersonal";
+            $subjects[] = "Communication: interpersonal";
+
         if ($this->in_range($cn,'383,384'))
-            $s .= ", Communication: businesses";
+            $subjects[] = "Communication: businesses";
+
         if ($this->in_range($cn,'791,792'))
-            $s .= ", Communication: cinema and theatre arts";
+            $subjects[] = "Communication: cinema and theatre arts";
+
         if ($this->in_range($cn,'800,808'))
-            $s .= ", Communication: rhetoric";
+            $subjects[] = "Communication: rhetoric";
+
         if ($this->in_range($cn,'3-6'))
-            $s .= ", Computer Science";
+            $subjects[] = "Computer Science";
+
         if ($this->in_range($cn,'370-378'))
-            $s .= ", Education";
+            $subjects[] = "Education";
+
         if ($this->in_range($cn,'620-629'))
-            $s .= ", Engineering";
+            $subjects[] = "Engineering";
+
         if ($this->in_range($cn,'800-829'))
-            $s .= ", English";
+            $subjects[] = "English";
+
         if (false)
-            $s .= ", Environmental Science";
+            $subjects[] = "Environmental Science";
+
         if (false)
-            $s .= ", Foreign Languages";
+            $subjects[] = "Foreign Languages";
+
         if ($this->in_range($cn,'550-560'))
-            $s .= ", Geology";
+            $subjects[] = "Geology";
+
         if ($this->in_range($cn,'900-999'))
-            $s .= ", History";
+            $subjects[] = "History";
+
         if (false)
-            $s .= ", HNGR";
+            $subjects[] = "HNGR";
+
         if (false)
-            $s .= ", Intercultural Studies";
+            $subjects[] = "Intercultural Studies";
+
         if ($this->in_range($cn,'500-519'))
-            $s .= ", Mathematics";
+            $subjects[] = "Mathematics";
+
         if ($this->in_range($cn,'780-789'))
-            $s .= ", Music";
+            $subjects[] = "Music";
+
         if ($this->in_range($cn,'100-129,140-149,160-199'))
-            $s .= ", Philosophy";
+            $subjects[] = "Philosophy";
+
         if ($this->in_range($cn,'520-539'))
-            $s .= ", Physics";
+            $subjects[] = "Physics";
+
         if ($this->in_range($cn,'310-329'))
-            $s .= ", Politics & International Relations";
+            $subjects[] = "Politics & International Relations";
+
         if ($this->in_range($cn,'150-159,616'))
-            $s .= ", Psychology";
+            $subjects[] = "Psychology";
+
         if ($this->in_range($cn,'300-309'))
-            $s .= ", Sociology";
+            $subjects[] = "Sociology";
+
         if ($this->in_range($cn,'307'))
-            $s .= ", Urban Studies";
-        if ($s!=='') {
-            $s = substr($s,2);
-        }
-        return $s;
+            $subjects[] = "Urban Studies";
+
+        return implode(', ',$subjects);
     }
 
     protected function cmp_cn($cn1, $cn2) {

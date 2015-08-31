@@ -13,7 +13,6 @@
  */
 class DefaultProcessor extends AbstractClassificationProcessor {
     public function __construct($segments) {
-        parent::__construct(null);
         $txt = "";
         foreach($segments as $seg) {
             if ($txt==='')
@@ -22,6 +21,16 @@ class DefaultProcessor extends AbstractClassificationProcessor {
                 $txt .= ", $seg";
         }
         $txt .= "}";
-        $this->data['classification_type'] = "UNKNOWN";
+        $this->data = array('classification_type'=>"UNKNOWN",
+            'UNKNOWN'=>$txt);
+
+    }
+
+    protected function get_subject($cn) {
+        return "";
+    }
+
+    protected function cmp_cn($cn1,$cn2) {
+        return FALSE;
     }
 }

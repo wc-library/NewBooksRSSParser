@@ -48,6 +48,6 @@ class RSSFeed {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'
             . $this->xml->channel->asXML() . "\n</rss>";
 
-        return $xml;
+        return preg_replace("@(</[a-z_]*>)(<[a-z])@","\\1\n\\2",$xml);
     }
 }

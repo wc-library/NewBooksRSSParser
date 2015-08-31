@@ -6,8 +6,9 @@
  */
 abstract class AbstractClassificationProcessor {
 
-    public function __construct($number) {
-        $this->data = array('subject' => $this->get_subject($number));
+    public function __construct($type,$prefix,$number,$cutter) {
+        $this->data = array('classification_type'=>$type,
+            'subject' => $this->get_subject($number));
     }
 
     // returns an associative array (fieldname=>value)
@@ -17,39 +18,19 @@ abstract class AbstractClassificationProcessor {
         return $this->data;
     }
 
-    protected function get_subject($cn) {
-        return "";
-    }
+    protected abstract function get_subject($cn);
 
-    protected function cmp_cn($cn1,$cn2) {
-        return FALSE;
-    }
+    protected abstract function cmp_cn($cn1,$cn2);
 
     protected function in_range($cn, $range) {
-        $ranges = self::parse_range(strtr($range,' ',''));
-        $flag = false;
-        foreach ( $ranges as $r ) {
+        foreach ( Util::parse_range($range) as $r ) {
             if (count($r)===1) {
-                $flag = $flag||($this->cmp_cn($cn,$r[0])==0);
-            } else {
-                $flag = $flag||($this->cmp_cn($r[0],$cn)<=0 && $this->cmp_cn($cn,$r[1])<=0);
+                if ($this->cmp_cn($cn,$r[0])===0)
+                    return true;
+            } else if ($this->cmp_cn($r[0],$cn)<=0 && $this->cmp_cn($cn,$r[1])<=0) {
+                return true;
             }
         }
-
-        return $flag;
-    }
-
-
-    protected static function parse_range($range) {
-        $ranges = explode(',',$range);
-        $ret = array();
-        foreach ($ranges as $r) {
-            if (stripos($range,'-') !== FALSE) {
-                $ret[] = explode('-',$range);
-            } else {
-                $ret[] = array($range);
-            }
-        }
-        return $ret;
+        return false;
     }
 }
