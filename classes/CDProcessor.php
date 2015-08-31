@@ -13,7 +13,7 @@
  */
 class CDProcessor extends AbstractClassificationProcessor {
 
-    protected function __construct($cn,$location) {
+    public function __construct($cn,$location) {
         $this->data = array('classification_type'=>'CD',
             'subject' => $this->get_subject(strtolower($location)));
     }

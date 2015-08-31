@@ -29,32 +29,25 @@ class CarliBookFeed extends RSSFeed {
                         ))
                 );
             $this->xml->channel->item[$i]->description = implode("\n",$str);
-            $fields = $str;
+            $fieldstr = $str;
+            $fields = array();
 
-            if (array_key_exists('location',$fields))
-                $location = $fields['location'];
-            else
-                $location = null;
-
-            foreach($fields as $f) {
-
+            foreach($fieldstr as $f) {
                 //separate field name and field value
                 $matches = array();
                 if(preg_match("/^([-a-zA-Z_ ]*[a-zA-Z]{4}): /",$f,$matches)) {;
                     $fname = strtolower(str_replace(' ','_',trim($matches[1])));
                     $fvalue = trim(str_replace($matches[0],'',$f));
-
+                    $fields[$fname] = $fvalue;
                     $this->xml->channel->item[$i]->addChild($fname,$fvalue);
-
-                    if ($fname === 'call_number') {
-                        $cn_data = ClassificationFactory::makeProcessor($fvalue,$location)->data();
-                        foreach($cn_data as $name => $value) {
-                            $name = htmlspecialchars($name);
-                            $value = htmlspecialchars($value);
-                            $this->xml->channel->item[$i]->addChild($name,$value);
-                        }
-                    }
                 }
+            }
+
+            $cn_data = ClassificationFactory::makeProcessor($fields)->data();
+            foreach($cn_data as $name => $value) {
+                $name = htmlspecialchars($name);
+                $value = htmlspecialchars($value);
+                $this->xml->channel->item[$i]->addChild($name,$value);
             }
         }
     }
