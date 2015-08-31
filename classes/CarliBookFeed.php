@@ -31,6 +31,11 @@ class CarliBookFeed extends RSSFeed {
             $this->xml->channel->item[$i]->description = implode("\n",$str);
             $fields = $str;
 
+            if (array_key_exists('location',$fields))
+                $location = $fields['location'];
+            else
+                $location = null;
+
             foreach($fields as $f) {
 
                 //separate field name and field value
@@ -42,7 +47,7 @@ class CarliBookFeed extends RSSFeed {
                     $this->xml->channel->item[$i]->addChild($fname,$fvalue);
 
                     if ($fname === 'call_number') {
-                        $cn_data = self::analyze_call_number($fvalue);
+                        $cn_data = ClassificationFactory::makeProcessor($fvalue,$location)->data();
                         foreach($cn_data as $name => $value) {
                             $name = htmlspecialchars($name);
                             $value = htmlspecialchars($value);
@@ -52,9 +57,5 @@ class CarliBookFeed extends RSSFeed {
                 }
             }
         }
-    }
-
-    public static function analyze_call_number($callnumber) {
-        return ClassificationFactory::makeProcessor($callnumber)->data();
     }
 }

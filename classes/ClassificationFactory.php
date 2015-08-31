@@ -13,7 +13,7 @@
  */
 class ClassificationFactory {
 
-    public static function makeProcessor($callnumber) {
+    public static function makeProcessor($callnumber,$location) {
         $segments = explode(' ',$callnumber);
         $prefix = "";
         $number = "";
@@ -56,6 +56,6 @@ class ClassificationFactory {
             return new LCProcessor($prefix,$number,$cutter);
         else if ($type === "dewey")
             return new DeweyProcessor($prefix,$number,$cutter);
-        return new DefaultProcessor($segments);
+        return new CDProcessor($callnumber, $location);
     }
 }
