@@ -19,55 +19,55 @@ class DeweyProcessor extends AbstractClassificationProcessor {
     protected function get_subject($cn) {
         $subjects = array();
 
-        if ($this->in_range($cn,"300,301,306"))
+        if ($this->matches($cn,"300,301,306"))
             $subjects[] = "Anthropology";
 
-        if ($this->in_range($cn,"611-616"))
+        if ($this->matches($cn,"611-616"))
             $subjects[] = "Applied Health Science";
 
-        if ($this->in_range($cn,"700-770"))
+        if ($this->matches($cn,"700-770"))
             $subjects[] = "Art";
 
-        if ($this->in_range($cn,"200-299"))
+        if ($this->matches($cn,"200-299"))
             $subjects[] = "Biblical & Theological Studies";
 
-        if ($this->in_range($cn,'570-599'))
+        if ($this->matches($cn,'570-599'))
             $subjects[] = "Biology";
 
-        if ( $this->in_range($cn,'330-349,657-659,406,506,650,706,906'))
+        if ( $this->matches($cn,'330-349,657-659,406,506,650,706,906'))
             $subjects[] = "Business & Economics";
 
-        if ($this->in_range($cn,'540-548'))
+        if ($this->matches($cn,'540-548'))
             $subjects[] = "Chemistry";
 
-        if ($this->in_range($cn,'230-236,238-243,246-249,262-265,268-287'))
+        if ($this->matches($cn,'230-236,238-243,246-249,262-265,268-287'))
             $subjects[] = "Christian Formation & Ministry";
 
-        if ($this->in_range($cn,'70-79'))
+        if ($this->matches($cn,'70-79'))
             $subjects[] = "Communication: journalism";
 
-        if ($this->in_range($cn,'302'))
+        if ($this->matches($cn,'302'))
             $subjects[] = "Communication: interpersonal";
 
-        if ($this->in_range($cn,'383,384'))
+        if ($this->matches($cn,'383,384'))
             $subjects[] = "Communication: businesses";
 
-        if ($this->in_range($cn,'791,792'))
+        if ($this->matches($cn,'791,792'))
             $subjects[] = "Communication: cinema and theatre arts";
 
-        if ($this->in_range($cn,'800,808'))
+        if ($this->matches($cn,'800,808'))
             $subjects[] = "Communication: rhetoric";
 
-        if ($this->in_range($cn,'3-6'))
+        if ($this->matches($cn,'3-6'))
             $subjects[] = "Computer Science";
 
-        if ($this->in_range($cn,'370-378'))
+        if ($this->matches($cn,'370-378'))
             $subjects[] = "Education";
 
-        if ($this->in_range($cn,'620-629'))
+        if ($this->matches($cn,'620-629'))
             $subjects[] = "Engineering";
 
-        if ($this->in_range($cn,'800-829'))
+        if ($this->matches($cn,'800-829'))
             $subjects[] = "English";
 
         if (false)
@@ -76,10 +76,10 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         if (false)
             $subjects[] = "Foreign Languages";
 
-        if ($this->in_range($cn,'550-560'))
+        if ($this->matches($cn,'550-560'))
             $subjects[] = "Geology";
 
-        if ($this->in_range($cn,'900-999'))
+        if ($this->matches($cn,'900-999'))
             $subjects[] = "History";
 
         if (false)
@@ -88,28 +88,28 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         if (false)
             $subjects[] = "Intercultural Studies";
 
-        if ($this->in_range($cn,'500-519'))
+        if ($this->matches($cn,'500-519'))
             $subjects[] = "Mathematics";
 
-        if ($this->in_range($cn,'780-789'))
+        if ($this->matches($cn,'780-789'))
             $subjects[] = "Music";
 
-        if ($this->in_range($cn,'100-129,140-149,160-199'))
+        if ($this->matches($cn,'100-129,140-149,160-199'))
             $subjects[] = "Philosophy";
 
-        if ($this->in_range($cn,'520-539'))
+        if ($this->matches($cn,'520-539'))
             $subjects[] = "Physics";
 
-        if ($this->in_range($cn,'310-329'))
+        if ($this->matches($cn,'310-329'))
             $subjects[] = "Politics & International Relations";
 
-        if ($this->in_range($cn,'150-159,616'))
+        if ($this->matches($cn,'150-159,616'))
             $subjects[] = "Psychology";
 
-        if ($this->in_range($cn,'300-309'))
+        if ($this->matches($cn,'300-309'))
             $subjects[] = "Sociology";
 
-        if ($this->in_range($cn,'307'))
+        if ($this->matches($cn,'307'))
             $subjects[] = "Urban Studies";
 
         return implode(', ',$subjects);
@@ -123,5 +123,17 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         } else {
             return 1;
         }
+    }
+
+    protected function matches($cn, $range) {
+        foreach ( Util::parse_range($range) as $r ) {
+            if (count($r)===1) {
+                if ($this->cmp_cn($cn,$r[0])===0)
+                    return true;
+            } else if ($this->cmp_cn($r[0],$cn)<=0 && $this->cmp_cn($cn,$r[1])<=0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

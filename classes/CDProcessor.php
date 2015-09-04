@@ -18,7 +18,7 @@ class CDProcessor extends AbstractClassificationProcessor {
             'subject' => $this->get_subject(strtolower($location)));
     }
 
-    protected function cmp_cn($cn1, $cn2) {
+    protected function matches($cn, $range) {
         return FALSE;
     }
 

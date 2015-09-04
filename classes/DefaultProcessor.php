@@ -30,7 +30,7 @@ class DefaultProcessor extends AbstractClassificationProcessor {
         return "";
     }
 
-    protected function cmp_cn($cn1,$cn2) {
+    protected function matches($cn, $range) {
         return FALSE;
     }
 }

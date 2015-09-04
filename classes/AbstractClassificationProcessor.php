@@ -20,17 +20,5 @@ abstract class AbstractClassificationProcessor {
 
     protected abstract function get_subject($cn);
 
-    protected abstract function cmp_cn($cn1,$cn2);
-
-    protected function in_range($cn, $range) {
-        foreach ( Util::parse_range($range) as $r ) {
-            if (count($r)===1) {
-                if ($this->cmp_cn($cn,$r[0])===0)
-                    return true;
-            } else if ($this->cmp_cn($r[0],$cn)<=0 && $this->cmp_cn($cn,$r[1])<=0) {
-                return true;
-            }
-        }
-        return false;
-    }
+    protected abstract function matches($cn, $range);
 }
