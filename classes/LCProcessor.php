@@ -73,7 +73,7 @@ class LCProcessor extends AbstractClassificationProcessor {
         if ($this->matches($cn,'HC,HD'))
             $subjects[] = "HNGR";
 
-        if ($this->matches($cn,'BV'))
+        if ($this->matches($cn,'BV2000-BV3999'))
             $subjects[] = "Intercultural Studies";
 
         if ($this->matches($cn,'QA'))
@@ -153,6 +153,7 @@ class LCProcessor extends AbstractClassificationProcessor {
     }
 
     private static function normalize($cn) {
+        $cn_orig = $cn;
 
         $regex_alpha = "([A-Z]{1,3})";
         $regex_num = "([0-9]{0,4})";
@@ -178,6 +179,7 @@ class LCProcessor extends AbstractClassificationProcessor {
             return str_split($alpha.$num.$extra);
         }
 
+        error_log("failed to normalize: $cn_orig");
         return FALSE;
     }
 
