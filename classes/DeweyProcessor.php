@@ -43,20 +43,8 @@ class DeweyProcessor extends AbstractClassificationProcessor {
         if ($this->matches($cn,'230-236,238-243,246-249,262-265,268-287'))
             $subjects[] = "Christian Formation & Ministry";
 
-        if ($this->matches($cn,'70-79'))
-            $subjects[] = "Communication: journalism";
-
-        if ($this->matches($cn,'302'))
-            $subjects[] = "Communication: interpersonal";
-
-        if ($this->matches($cn,'383,384'))
-            $subjects[] = "Communication: businesses";
-
-        if ($this->matches($cn,'791,792'))
-            $subjects[] = "Communication: cinema and theatre arts";
-
-        if ($this->matches($cn,'800,808'))
-            $subjects[] = "Communication: rhetoric";
+        if ($this->matches($cn,'70-79,302,383,384,791,792,800,808'))
+            $subjects[] = "Communication";
 
         if ($this->matches($cn,'3-6'))
             $subjects[] = "Computer Science";
