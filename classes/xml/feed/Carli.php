@@ -9,20 +9,23 @@ class Carli extends RSS {
         $nitems = count($this->xml->channel->item);
         for ( $i=0; $i<$nitems; ++$i ) {
 
-            $str =  \explode('&lt;BR/&gt;',
-                    \preg_replace('@&lt;img border="0" src="(.*)" vspace="3" border="0" align="right"/&gt;@',"\\1",
-                    \str_replace(array(
-                            '&lt;B&gt;',
-                            '&lt;/B&gt;',
-                            '<description>','</description>'),
-                        '',
-                        $this->xml->channel->item[$i]->description->asXML()
-                        ))
-                );
-            $this->xml->channel->item[$i]->description = \implode("\n",$str);
-            $fieldstr = $str;
-            $fields = array();
+            $tidy_desc = \str_replace(array('&lt;B&gt;','&lt;/B&gt;','<description>','</description>'),
+                '',$this->xml->channel->item[$i]->description->asXML());
 
+            $matches = array();
+            if(\preg_match(
+                '@&lt;img border="0" src="(.*)" vspace="3" border="0" align="right"/&gt;@',
+                $tidy_desc,$matches)) {
+                $imgurl = $matches[1];
+                $tidy_desc = str_replace($matches[0],'',$tidy_desc);
+            } else {
+                $imgurl = "";
+            }
+
+            $fieldstr =  \explode('&lt;BR/&gt;',$tidy_desc);
+            $this->xml->channel->item[$i]->description = \implode("\n",$fieldstr);
+
+            $fields = array();
             foreach($fieldstr as $f) {
                 //separate field name and field value
                 $matches = array();
@@ -40,6 +43,14 @@ class Carli extends RSS {
                 $value = \htmlspecialchars($value);
                 $this->xml->channel->item[$i]->addChild($name,$value);
             }
+
+            unset($this->xml->channel->item[$i]->description[0]);
+
+            $this->xml->channel->item[$i]->addChild('cover',$imgurl);
         }
+    }
+
+    private function genImgUrl($sz,$isbn) {
+        return "http://covers.openlibrary.org/b/isbn/$isbn-$sz";
     }
 }
