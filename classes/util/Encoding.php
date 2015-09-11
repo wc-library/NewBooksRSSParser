@@ -35,9 +35,11 @@ POSSIBILITY OF SUCH DAMAGE.
  * @link     https://github.com/neitanod/forceutf8
  * @example  https://github.com/neitanod/forceutf8
  * @license  Revised BSD
-  */
+ *
+ * modifications for this project: namespace change, 'ForceUTF8' -> 'util'
+ */
 
-namespace ForceUTF8;
+namespace util;
 
 class Encoding {
 
@@ -183,14 +185,14 @@ class Encoding {
         $text[$k] = self::toUTF8($v);
       }
       return $text;
-    } 
-    
+    }
+
     if(!is_string($text)) {
       return $text;
     }
-       
+
     $max = self::strlen($text);
-  
+
     $buf = "";
     for($i = 0; $i < $max; $i++){
         $c1 = $text{$i};

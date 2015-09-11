@@ -1,12 +1,7 @@
 <?php
 
-$CLASSES_DIR = 'classes/';
+require_once("classes/util/Utility.php");
+spl_autoload_register('\util\Utility::loadClass');
 
-// Autoloader
-function __autoload( $className ) {
-    $parts = explode('\\', $className);
-    require "classes/".end($parts).".php";
-}
-
-$feed = new CarliBookFeed();
+$feed = new \xml\feed\Carli();
 echo $feed->xml();

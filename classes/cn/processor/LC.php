@@ -1,22 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace cn\processor;
 
-/**
- * Description of LCProcessor
- *
- * @author bgarcia
- */
-class LCProcessor extends AbstractClassificationProcessor {
+class LC extends AbstractProcessor {
     public function __construct($prefix,$number,$cutter) {
         parent::__construct('LC',$prefix,$number,$cutter);
     }
 
-    protected function get_subject($cn) {
+    protected function getSubject($cn) {
         $subjects = array();
 
         if ($this->matches($cn, "GF,GN-GT"))
@@ -130,7 +121,7 @@ class LCProcessor extends AbstractClassificationProcessor {
     protected function matches($cn, $rangeList) {
         if ( ($cn=self::normalize($cn)) === FALSE)
             return FALSE;
-        foreach ( Util::parse_range($rangeList) as $r ) {
+        foreach ( \util\Utility::parseRange($rangeList) as $r ) {
             if (count($r)===1) {
                 if ( ($class=self::normalize($r[0])) === FALSE)
                     return FALSE;

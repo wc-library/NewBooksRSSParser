@@ -1,17 +1,8 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace cn\processor;
 
-/**
- * Description of DefaultProcessor
- *
- * @author bgarcia
- */
-class DefaultProcessor extends AbstractClassificationProcessor {
+class Generic extends AbstractProcessor {
     public function __construct($segments) {
         $txt = "";
         foreach($segments as $seg) {
@@ -26,7 +17,7 @@ class DefaultProcessor extends AbstractClassificationProcessor {
 
     }
 
-    protected function get_subject($cn) {
+    protected function getSubject($cn) {
         return "";
     }
 

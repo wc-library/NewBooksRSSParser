@@ -1,25 +1,16 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace cn\processor;
 
-/**
- * Description of ClassificationFactory
- *
- * @author bgarcia
- */
-class ClassificationFactory {
+class Factory {
 
-    public static function makeProcessor($item_data) {
+    public static function make($item_data) {
         $callnumber = $item_data['call_number'];
         $location = $item_data['location'];
 
         $cd_check = preg_match("/^[a-zA-Z]{4}/",$callnumber);
         if ($cd_check!==FALSE && $cd_check===1) {
-            return new CDProcessor($callnumber, $location);
+            return new CD($callnumber, $location);
         } else {
             $segments = explode(' ',$callnumber);
             $prefix = "";
@@ -59,11 +50,11 @@ class ClassificationFactory {
             $cutter = trim ($cutter);
 
             if ($type === "lc") {
-                return new LCProcessor($prefix,$number,$cutter);
+                return new LC($prefix,$number,$cutter);
             } else if ($type === "dewey") {
-                return new DeweyProcessor($prefix,$number,$cutter);
+                return new Dewey($prefix,$number,$cutter);
             } else {
-                return new DefaultProcessor($segments);
+                return new Generic($segments);
             }
         }
     }

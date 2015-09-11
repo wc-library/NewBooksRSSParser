@@ -1,22 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace cn\processor;
 
-/**
- * Description of DeweyProcessor
- *
- * @author bgarcia
- */
-class DeweyProcessor extends AbstractClassificationProcessor {
+class Dewey extends AbstractProcessor {
     public function __construct($prefix,$number,$cutter) {
         parent::__construct("Dewey",$prefix,$number + 0.0,$cutter);
     }
 
-    protected function get_subject($cn) {
+    protected function getSubject($cn) {
         $subjects = array();
 
         if ($this->matches($cn,"300,301,306"))
@@ -114,7 +105,7 @@ class DeweyProcessor extends AbstractClassificationProcessor {
     }
 
     protected function matches($cn, $range) {
-        foreach ( Util::parse_range($range) as $r ) {
+        foreach ( \util\Utility::parseRange($range) as $r ) {
             if (count($r)===1) {
                 if ($this->cmp_cn($cn,$r[0])===0)
                     return true;
