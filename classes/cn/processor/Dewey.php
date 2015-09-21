@@ -64,7 +64,7 @@ class Dewey extends AbstractProcessor {
         if (false)
             $subjects[] = "HNGR";
 
-        if (false)
+        if ($this->matches($cn,"266"))
             $subjects[] = "Intercultural Studies";
 
         if ($this->matches($cn,'500-519'))

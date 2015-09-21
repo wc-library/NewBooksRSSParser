@@ -22,7 +22,7 @@ class LC extends AbstractProcessor {
         if ($this->matches($cn, "BL-BV1999,BV4000-BV4399,BX"))
             $subjects[] = "Biblical & Theological Studies";
 
-        if ($this->matches($cn, 'QH', 'QR'))
+        if ($this->matches($cn, 'QH,QR,S'))
             $subjects[] = "Biology";
 
         if ($this->matches($cn, "HB,HC,HG,HJ,K,HD1-HD1395.5,HD2321-HD9999,HF5001-HF6182"))
@@ -37,28 +37,28 @@ class LC extends AbstractProcessor {
         if (false)
             $subjects[] = "Communication";
 
-        if ($this->matches($cn,'QA75.5','QA76.765'))
+        if ($this->matches($cn,'QA75.5,QA76.765'))
             $subjects[] = "Computer Science";
 
-        if ($this->matches($cn, "L"))
+        if ($this->matches($cn, "L,PZ"))
             $subjects[] = "Education";
 
-        if ($this->matches($cn,'TA','TN'))
+        if ($this->matches($cn,'TA,TN'))
             $subjects[] = "Engineering";
 
-        if ($this->matches($cn,'PN,PQ,PR,PS,PT,PZ'))
+        if ($this->matches($cn,'PE,PN,PQ-PT'))
             $subjects[] = "English";
 
-        if ($this->matches($cn,'GE,QE38,QC882-QC994.9,QH72-QH77,TD169-TD1066'))
+        if ($this->matches($cn,'GE,QE38,QC882-QC994.9,QH72-QH77,S,TD169-TD1066'))
             $subjects[] = "Environmental Science";
 
-        if ($this->matches($cn, 'PA,PB'))
+        if ($this->matches($cn, 'PA-PD,PJ'))
             $subjects[] = "Foreign Languages";
 
         if ($this->matches($cn, "QE"))
             $subjects[] = "Geology";
 
-        if ($this->matches($cn,'D,E,F'))
+        if ($this->matches($cn,'C-G'))
             $subjects[] = "History";
 
         if ($this->matches($cn,'HC,HD'))
@@ -73,13 +73,13 @@ class LC extends AbstractProcessor {
         if ($this->matches($cn,'M,ML,MT'))
             $subjects[] = "Music";
 
-        if ($this->matches($cn,'BA,BB,BC,BD,BH,BJ'))
+        if ($this->matches($cn,'BA-BD,BH,BJ'))
             $subjects[] = "Philosophy";
 
         if ($this->matches($cn,'QB-QC'))
             $subjects[] = "Physics";
 
-        if ($this->matches($cn,'J,BV2000-BV3999'))
+        if ($this->matches($cn,'J,K'))
             $subjects[] = "Politics & International Relations";
 
         if ($this->matches($cn,'BF,QP351-QP495,R726.5-R726.8,RC321-RC571'))
