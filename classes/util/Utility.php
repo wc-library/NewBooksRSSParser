@@ -23,4 +23,11 @@ class Utility {
         }
         return $filepath !== false;
     }
+
+    public static function isValidImage($url) {
+        if (empty($url))
+            return false;
+        $data = getimagesize($url);
+        return ($data[0]>1 && $data[1]>1);
+    }
 }

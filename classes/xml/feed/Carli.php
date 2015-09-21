@@ -16,7 +16,11 @@ class Carli extends RSS {
             if(\preg_match(
                 '@&lt;img border="0" src="(.*)" vspace="3" border="0" align="right"/&gt;@',
                 $tidy_desc,$matches)) {
-                $imgurl = $matches[1];
+                if (\util\Utility::isValidImage($matches[1])) {
+                    $imgurl = $matches[1];
+                } else {
+                    $imgurl = "";
+                }
                 $tidy_desc = str_replace($matches[0],'',$tidy_desc);
             } else {
                 $imgurl = "";
@@ -46,11 +50,9 @@ class Carli extends RSS {
 
             unset($this->xml->channel->item[$i]->description[0]);
 
+            if (! \util\Utility::isValidImage($imgurl))
+                $imgurl = "";
             $this->xml->channel->item[$i]->addChild('cover',$imgurl);
         }
-    }
-
-    private function genImgUrl($sz,$isbn) {
-        return "http://covers.openlibrary.org/b/isbn/$isbn-$sz";
     }
 }
