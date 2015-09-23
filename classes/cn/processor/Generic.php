@@ -17,11 +17,15 @@ class Generic extends AbstractProcessor {
 
     }
 
-    protected function getSubject($cn) {
+    public function getSubject() {
         return "";
     }
 
-    protected function matches($cn, $range) {
+    public function matches($range) {
         return FALSE;
+    }
+
+    protected function compareTo($cn) {
+        return 2; //invalid
     }
 }

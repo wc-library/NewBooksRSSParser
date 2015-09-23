@@ -5,18 +5,23 @@ namespace cn\processor;
 class CD extends AbstractProcessor {
 
     public function __construct($cn,$location) {
+        $this->location = strtolower($location);
         $this->data = array('classification_type'=>'CD',
-            'subject' => $this->getSubject(strtolower($location)));
+            'subject' => $this->getSubject());
     }
 
-    protected function matches($cn, $range) {
+    public function matches($range) {
         return FALSE;
     }
 
-    protected function getSubject($location) {
+    protected function compareTo($cn) {
+        return -2; // invalid
+    }
+
+    public function getSubject() {
         $subjects = array();
 
-        if (stripos($location,"music library")!==FALSE)
+        if (stripos($this->location,"music library")!==FALSE)
             $subjects[] = "Music";
 
         return implode(', ',$subjects);

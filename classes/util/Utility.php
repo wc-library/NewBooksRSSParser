@@ -30,4 +30,12 @@ class Utility {
         $data = getimagesize($url);
         return ($data[0]>1 && $data[1]>1);
     }
+
+    public static function ntimes($str,$n) {
+        $ret = "";
+        for ($i=0; $i<$n; ++$i) {
+            $ret .= $str;
+        }
+        return $ret;
+    }
 }

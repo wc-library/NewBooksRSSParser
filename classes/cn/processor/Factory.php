@@ -44,15 +44,11 @@ class Factory {
 
                 $cutter .= "$segment ";
             }
-
-            $prefix = trim($prefix);
-            $number = trim($number);
-            $cutter = trim ($cutter);
-
+            
             if ($type === "lc") {
-                return new LC($prefix,$number,$cutter);
+                return new LC(trim($number));
             } else if ($type === "dewey") {
-                return new Dewey($prefix,$number,$cutter);
+                return new Dewey(trim($number));
             } else {
                 return new Generic($segments);
             }

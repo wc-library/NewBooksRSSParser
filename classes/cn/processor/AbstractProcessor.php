@@ -4,11 +4,6 @@ namespace cn\processor;
 
 abstract class AbstractProcessor {
 
-    public function __construct($type,$prefix,$number,$cutter) {
-        $this->data = array('classification_type'=>$type,
-            'subject' => $this->getSubject($number));
-    }
-
     // returns an associative array (fieldname=>value)
     // indicating the fields CarliBookFeed should append
     // to an entry
@@ -16,7 +11,26 @@ abstract class AbstractProcessor {
         return $this->data;
     }
 
-    protected abstract function getSubject($cn);
+    public abstract function getSubject();
 
-    protected abstract function matches($cn, $range);
+    public abstract function matches($range);
+
+    //returns 0 when $this->cn == $cn
+    //returns -1 when $this->cn < $cn
+    //returns 1 when $this->cn > $cn
+    protected abstract function compareTo($cn);
+
+    protected function equals($cn) {
+        return $this->compareTo($cn)===0;
+    }
+
+    protected function lessThan($cn) {
+        return $this->compareTo($cn)===-1;
+    }
+
+    protected function greaterThan($cn) {
+        return $this->compareTo($cn)===1;
+    }
+
+
 }
