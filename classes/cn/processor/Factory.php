@@ -5,7 +5,9 @@ namespace cn\processor;
 class Factory {
 
     public static function make($item_data) {
-        $callnumber = $item_data['call_number'];
+		// to fix classification for books with location 'Oversize Books'
+        $callnumber = trim(str_ireplace("Oversize","",$item_data['call_number']));
+
         $location = $item_data['location'];
 
         $cd_check = preg_match("/^[a-zA-Z]{4}/",$callnumber);
@@ -44,7 +46,7 @@ class Factory {
 
                 $cutter .= "$segment ";
             }
-            
+
             if ($type === "lc") {
                 return new LC(trim($number));
             } else if ($type === "dewey") {
