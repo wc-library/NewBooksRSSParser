@@ -5,8 +5,10 @@ namespace cn\processor;
 class Factory {
 
     public static function make($item_data) {
+
 		// to fix classification for books with location 'Oversize Books'
-        $callnumber = trim(str_ireplace("Oversize","",$item_data['call_number']));
+		$remList = implode('|',array('Oversize','CURR'));
+        $callnumber = preg_replace("/^($remList)/i","",$item_data['call_number']);
 
         $location = $item_data['location'];
 
