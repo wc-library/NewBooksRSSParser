@@ -15,7 +15,7 @@ class LC extends AbstractProcessor {
     public function getSubject() {
         $subjects = array();
 
-        if ($this->matches("GF,GN-GT"))
+        if ($this->matches("GA-GC,GE-GF,GN,GR,GT,GV"))
             $subjects[] = "Anthropology";
 
         if ($this->matches('QM,QP,RA'))
@@ -157,7 +157,7 @@ class LC extends AbstractProcessor {
         if (preg_match($regex,$cn,$matches)) {
 
             //normalize alpha
-            $alpha = $matches[1].\util\Utility::ntimes('*',3-strlen($matches[1]));
+            $alpha = $matches[1];//.\util\Utility::ntimes('*',3-strlen($matches[1]));
 
             //normalize num
             if (array_key_exists(2, $matches))
