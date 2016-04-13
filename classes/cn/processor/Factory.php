@@ -7,7 +7,7 @@ class Factory {
     public static function make($item_data) {
 
 		// to fix classification for books with location 'Oversize Books'
-		$remList = implode('|',array('Oversize','CURR'));
+		$remList = implode('|',array('Oversize','CURR','Honey Rock'));
         $callnumber = preg_replace("/^($remList)/i","",$item_data['call_number']);
 
         $location = $item_data['location'];
