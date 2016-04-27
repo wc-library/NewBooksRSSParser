@@ -7,10 +7,14 @@ class Factory {
     public static function make($item_data) {
 
 		// to fix classification for books with location 'Oversize Books'
-		$remList = implode('|',array('Oversize','CURR','Honey Rock'));
+		$remList = implode('|',array('Oversize','CURR E-MA','CURR','Honey Rock'));
         $callnumber = preg_replace("/^($remList)/i","",$item_data['call_number']);
 
-        $location = $item_data['location'];
+	if(preg_match("/^INTERNET/",$callnumber)){
+		$location = "Internet";
+	}else{
+	        $location = $item_data['location'];
+	}
 
         $cd_check = preg_match("/^[a-zA-Z]{4}/",$callnumber);
         if ($cd_check!==FALSE && $cd_check===1) {
@@ -50,11 +54,11 @@ class Factory {
             }
 
             if ($type === "lc") {
-                return new LC(trim($number));
+                return new LC(trim($number),$location);
             } else if ($type === "dewey") {
-                return new Dewey(trim($number));
+                return new Dewey(trim($number),$location);
             } else {
-                return new Generic($segments);
+                return new Generic($segments,$location);
             }
         }
     }

@@ -3,10 +3,12 @@
 namespace cn\processor;
 
 class Dewey extends AbstractProcessor {
-    public function __construct($number) {
+    public function __construct($number,$location) {
         $this->cn = $number + 0.0;
         $this->data = array('classification_type'=>'Dewey',
-            'subject' => $this->getSubject());
+            'subject' => $this->getSubject(),
+	    'location' => $location
+	    );
     }
 
     public function getSubject() {
