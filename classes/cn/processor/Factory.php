@@ -4,6 +4,28 @@ namespace cn\processor;
 
 class Factory {
 
+    // Possible call number prefixes for textbooks (preceded by 'CURR ')
+    // See docs/education-classification-list.pdf
+    const CURR_CN_PREFIXES = [
+        // elementary
+        'E-AR', 'E-GU', 'E-SE',
+        'E-LA', 'E-MA', 'E-MC',
+        'E-MU', 'E-RE', 'E-SC',
+        'E-SO',
+        // secondary
+        'S-AR', 'S-BU', 'S-FL',
+        'S-GU', 'S-HE', 'S-LA',
+        'S-LI', 'S-MC', 'S-MA',
+        'S-SC', 'S-SO', 'S-VO'
+    ];
+
+    // Additional call number prefixes to clean up
+    const MISC_CN_PREFIXES = [
+        'Oversize',
+        'Honey Rock'
+    ];
+
+    
     public static function make($item_data) {
 
 		// to fix classification for books with location 'Oversize Books'
