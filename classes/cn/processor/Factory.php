@@ -25,7 +25,7 @@ class Factory {
         'Honey Rock'
     ];
 
-    
+
     public static function make($item_data) {
 
 		// to fix classification for books with location 'Oversize Books'
@@ -84,4 +84,23 @@ class Factory {
             }
         }
     }
+
+
+    /**
+     * Remove any inconsistent prefixes from call number
+     * @param string $cn Call number to process
+     * @return string Call number with any inconsistencies removed
+     */
+    function clean_call_number($cn) {
+        // Matches 'CURR ' followed by zero or one of the strings in CURR_CN_PREFIXES
+        $curr_regex = 'CURR (' . implode('|', Factory::CURR_CN_PREFIXES) . ')?';
+        // Matches any of the other prefixes specificed in MISC_CN_PREFIXES
+        $misc_regex = implode('|', Factory::MISC_CN_PREFIXES);
+
+        $pattern = "/^($curr_regex|$misc_regex)/i";
+
+        // Remove prefixes
+        return trim(preg_replace($pattern,'',$cn));
+    }
+
 }
