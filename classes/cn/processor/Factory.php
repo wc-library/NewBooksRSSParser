@@ -29,8 +29,7 @@ class Factory {
     public static function make($item_data) {
 
 		// to fix classification for books with location 'Oversize Books'
-		$remList = implode('|',array('Oversize','CURR E-MA','CURR','Honey Rock'));
-        $callnumber = preg_replace("/^($remList)/i","",$item_data['call_number']);
+		$callnumber = Factory::clean_call_number($item_data['call_number']);
 
 	if(preg_match("/^INTERNET/",$callnumber)){
 		$location = "Internet";
@@ -91,7 +90,7 @@ class Factory {
      * @param string $cn Call number to process
      * @return string Call number with any inconsistencies removed
      */
-    function clean_call_number($cn) {
+    private static function clean_call_number($cn) {
         // Matches 'CURR ' followed by zero or one of the strings in CURR_CN_PREFIXES
         $curr_regex = 'CURR (' . implode('|', Factory::CURR_CN_PREFIXES) . ')?';
         // Matches any of the other prefixes specificed in MISC_CN_PREFIXES
