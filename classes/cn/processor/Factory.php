@@ -16,7 +16,9 @@ class Factory {
         'S-AR', 'S-BU', 'S-FL',
         'S-GU', 'S-HE', 'S-LA',
         'S-LI', 'S-MC', 'S-MA',
-        'S-SC', 'S-SO', 'S-VO'
+        'S-SC', 'S-SO', 'S-VO',
+        // audio/visual
+        'A-V'
     ];
 
     // Additional call number prefixes to clean up
