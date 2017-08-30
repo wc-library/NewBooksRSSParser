@@ -30,14 +30,14 @@ class Factory {
 
     public static function make($item_data) {
 
-		// to fix classification for books with location 'Oversize Books'
-		$callnumber = Factory::clean_call_number($item_data['call_number']);
+        // to fix classification for books with location 'Oversize Books'
+        $callnumber = Factory::clean_call_number($item_data['call_number']);
 
-	if(preg_match("/^INTERNET/",$callnumber)){
-		$location = "Internet";
-	}else{
-	        $location = $item_data['location'];
-	}
+        if(preg_match("/^INTERNET/",$callnumber)) {
+            $location = "Internet";
+        } else {
+            $location = $item_data['location'];
+        }
 
         $cd_check = preg_match("/^[a-zA-Z]{4}/",$callnumber);
         if ($cd_check!==FALSE && $cd_check===1) {
