@@ -88,7 +88,7 @@ class Factory {
 
 
     /**
-     * Remove any inconsistent prefixes from call number
+     * Remove any inconsistent prefixes from call number and trims the results
      * @param string $cn Call number to process
      * @return string Call number with any inconsistencies removed
      */
