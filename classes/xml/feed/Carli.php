@@ -4,8 +4,19 @@ namespace xml\feed;
 
 class Carli extends RSS {
 
-    public function __construct() {
-        parent::__construct("https://i-share.carli.illinois.edu/newbooks/newbooks.cgi?library=WHEdb&list=all&day=7&op=and&text=&lang=English&submit=RSS");
+    // URL for the I-Share Carli RSS feed
+    const CARLI_URL = "https://i-share.carli.illinois.edu/newbooks/newbooks.cgi?library=WHEdb&list=all&day=7&op=and&text=&lang=English&submit=RSS";
+
+
+    /**
+     * Carli constructor.
+     * @param string $alternate_url (OPTIONAL) Specify the URL to the RSS feed. Used for testing.
+     */
+    public function __construct($alternate_url = null) {
+        // Use the alternate url if set (e.g. for testing)
+        $url = ($alternate_url === null) ? Carli::CARLI_URL : $alternate_url;
+
+        parent::__construct($url);
         $nitems = count($this->xml->channel->item);
         for ( $i=0; $i<$nitems; ++$i ) {
 
