@@ -38,7 +38,7 @@ class LC extends AbstractProcessor {
             $subjects[] = "Chemistry";
 
         if ($this->matches("BV4400-BV5099"))
-            $subjects[] = "Christian Formation & Ministry";
+            $subjects[] = "Christian Education";
 
         if (false)
             $subjects[] = "Communication";
@@ -58,9 +58,6 @@ class LC extends AbstractProcessor {
         if ($this->matches('GE,QE38,QC882-QC994.9,QH72-QH77,S,TD169-TD1066'))
             $subjects[] = "Environmental Science";
 
-        if ($this->matches('PA-PD,PJ'))
-            $subjects[] = "Foreign Languages";
-
         if ($this->matches("QE"))
             $subjects[] = "Geology";
 
@@ -68,13 +65,13 @@ class LC extends AbstractProcessor {
             $subjects[] = "History";
 
         if ($this->matches('HC,HD'))
-            $subjects[] = "HNGR";
-
-        if ($this->matches('BV2000-BV3999'))
-            $subjects[] = "Intercultural Studies";
+            $subjects[] = "Human Needs & Global Resources";
 
         if ($this->matches('QA'))
             $subjects[] = "Mathematics";
+
+        if ($this->matches('PA-PD,PJ'))
+            $subjects[] = "Modern & Classical Languages";
 
         if ($this->matches('M,ML,MT'))
             $subjects[] = "Music";
@@ -89,7 +86,7 @@ class LC extends AbstractProcessor {
             $subjects[] = "Politics & International Relations";
 
         if ($this->matches('BF,QP351-QP495,R726.5-R726.8,RC321-RC571'))
-            $subjects[] = "Psychology";
+            $subjects[] = "Psychology, Counseling, & Family Therapy";
 
         if ($this->matches('HM-HX'))
             $subjects[] = "Sociology";
