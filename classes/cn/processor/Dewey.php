@@ -36,7 +36,7 @@ class Dewey extends AbstractProcessor {
             $subjects[] = "Chemistry";
 
         if ($this->matches('230-236.999,238-243.999,246-249.999,262-265.999,268-287.999'))
-            $subjects[] = "Christian Formation & Ministry";
+            $subjects[] = "Christian Education";
 
         if ($this->matches('70-79.999,302-302.999,383-383.999,384-384.999,791-792.999,800-800.999,808-808.999'))
             $subjects[] = "Communication";
@@ -57,7 +57,7 @@ class Dewey extends AbstractProcessor {
             $subjects[] = "Environmental Science";
 
         if (false)
-            $subjects[] = "Foreign Languages";
+            $subjects[] = "Evangelism & Leadership";
 
         if ($this->matches('550-560.999'))
             $subjects[] = "Geology";
@@ -66,13 +66,16 @@ class Dewey extends AbstractProcessor {
             $subjects[] = "History";
 
         if (false)
-            $subjects[] = "HNGR";
+            $subjects[] = "Human Needs & Global Resources";
 
         if ($this->matches("266-266.999"))
             $subjects[] = "Intercultural Studies";
 
         if ($this->matches('500-519.999'))
             $subjects[] = "Mathematics";
+
+        if (false)
+            $subjects[] = "Modern & Classical Languages";
 
         if ($this->matches('780-789.999'))
             $subjects[] = "Music";
@@ -87,7 +90,7 @@ class Dewey extends AbstractProcessor {
             $subjects[] = "Politics & International Relations";
 
         if ($this->matches('150-159.999,616-616.999'))
-            $subjects[] = "Psychology";
+            $subjects[] = "Psychology, Counseling, & Family Therapy";
 
         if ($this->matches('300-309.999'))
             $subjects[] = "Sociology";
