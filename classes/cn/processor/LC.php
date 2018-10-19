@@ -26,7 +26,7 @@ class LC extends AbstractProcessor {
         if (preg_match("/DVD/", $this->location)){
             return "";
         }
-        if (preg_match("/Curriculum/", $this->location)){
+        if (preg_match("/Curriculum/", $this->location) || $this->cn == "CURRICULUM"){
             return "Education";
         }
         // Otherwise get subjects

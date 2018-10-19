@@ -40,7 +40,9 @@ class Factory {
         }
 
         $cd_check = preg_match("/^[a-zA-Z]{4}/",$callnumber);
-        if ($cd_check!==FALSE && $cd_check===1) {
+        if ($callnumber == "CURRICULUM"){
+            $type = "lc";
+        }else if ($cd_check!==FALSE && $cd_check===1 and $callnumber !== "CURRICULUM") {
             return new CD($callnumber, $location);
         } else {
             $segments = explode(' ',$callnumber);
@@ -100,6 +102,9 @@ class Factory {
 
         $pattern = "/^($curr_regex|$misc_regex)/i";
 
+        if(preg_match($curr_regex, $cn)){
+            return "CURRICULUM";
+        }
         // Remove prefixes
         return trim(preg_replace($pattern,'',$cn));
     }
