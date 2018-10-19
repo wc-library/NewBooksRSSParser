@@ -23,9 +23,10 @@ class CURR extends AbstractProcessor {
         $subjects = array();
 
         $subjects[] = "Education";
-        
-        if (stripos($this->location,"music library")!==FALSE)
+
+        if (preg_match("/music library/", $this->location)){
             $subjects[] = "Music";
+        }
 
         return implode(', ',$subjects);
     }
