@@ -4,15 +4,20 @@ namespace cn\processor;
 
 class Dewey extends AbstractProcessor {
     public function __construct($number,$location) {
+        $this->location = html_entity_decode($location);
         $this->cn = $number + 0.0;
         $this->data = array('classification_type'=>'Dewey',
             'subject' => $this->getSubject(),
-	    'location' => $location
+	    'location' => html_entity_decode($location)
 	    );
     }
 
     public function getSubject() {
         $subjects = array();
+
+        if (preg_match("/DVD/", $this->location)){
+            return "";
+        }
 
         if ($this->matches("300-301.999,306-306.999"))
             $subjects[] = "Anthropology";
