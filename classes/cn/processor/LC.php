@@ -7,6 +7,7 @@ class LC extends AbstractProcessor {
         if (is_array($number))
             var_dump($number);
 
+        $this->location = $location;
         $this->cn = $this->normalize($number);
         $this->data = array('classification_type'=>'LC',
             'subject' => $this->getSubject(),
@@ -14,7 +15,12 @@ class LC extends AbstractProcessor {
     }
 
     public function getSubject() {
+
         $subjects = array();
+        
+        if (preg_match("/Wade Center/", $this->location)){
+            return "";
+        }
 
         if ($this->matches("GA-GC,GE-GF,GN,GR,GT,GV"))
             $subjects[] = "Anthropology";
