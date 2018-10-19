@@ -8,7 +8,7 @@ class Dewey extends AbstractProcessor {
         $this->cn = $number + 0.0;
         $this->data = array('classification_type'=>'Dewey',
             'subject' => $this->getSubject(),
-	    'location' => html_entity_decode($location)
+	        'location' => html_entity_decode($location)
 	    );
     }
 

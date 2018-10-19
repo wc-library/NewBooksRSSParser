@@ -7,11 +7,12 @@ class LC extends AbstractProcessor {
         if (is_array($number))
             var_dump($number);
 
-        $this->location = $location;
+        $this->location = html_entity_decode($location);
         $this->cn = $this->normalize($number);
         $this->data = array('classification_type'=>'LC',
             'subject' => $this->getSubject(),
-	    'location' => $location);
+	        'location' => html_entity_decode($location)
+        );
     }
 
     public function getSubject() {
