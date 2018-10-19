@@ -15,8 +15,15 @@ class Dewey extends AbstractProcessor {
     public function getSubject() {
         $subjects = array();
 
+        // Don't get subjects for certain locations
+        if (preg_match("/Wade Center/", $this->location)){
+            return "";
+        }
         if (preg_match("/DVD/", $this->location)){
             return "";
+        }
+        if (preg_match("/Curriculum/", $this->location)){
+            return "Education";
         }
 
         if ($this->matches("300-301.999,306-306.999"))
