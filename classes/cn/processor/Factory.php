@@ -39,6 +39,10 @@ class Factory {
             $location = $item_data['location'];
         }
 
+        if($item_data['location'] == 'Wade Center -- Stacks (See Desk Attendant)'){
+            return false;
+        }
+
         $cd_check = preg_match("/^[a-zA-Z]{4}/",$callnumber);
         if ($cd_check!==FALSE && $cd_check===1) {
             return new CD($callnumber, $location);
