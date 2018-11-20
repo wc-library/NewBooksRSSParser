@@ -65,7 +65,7 @@ class Dewey extends AbstractProcessor {
         if ($this->matches('800-829.999'))
             $subjects[] = "English";
 
-        if ($this->matches('363.7,551.5-551.6,577,628,631.7,631.9'))
+        if ($this->matches('363.7,551.5-551.6,577-577.999,628-628.999,631.7,631.9'))
             $subjects[] = "Environmental Science";
 
         if (false)
